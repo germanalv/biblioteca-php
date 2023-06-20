@@ -1,0 +1,5 @@
+El sistema permitirá:
+    - Registro de Libros (ABM)
+    - Prestamos realizados
+    - Gestión de Usuario (ABM)
+
