@@ -1,3 +1,7 @@
+<?php
+$sidebar_op = 1; /* Maco como activo el menu "Prestamos" */
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,20 +12,17 @@
   <main class="d-flex flex-nowrap">
     <!-- Manu -->
     <?php include '../layout/sidebar.php';?>
-    
-      <hr>
-
-      <!-- Menu de Pefil de usuario -->
-      <?php include '../layout/perfil.php';?>
-
-    </div>
+  
 
     <div class="d-flex flex-column p-3 w-100">
         <div class="container">
             <!-- Contenedor Principal -->
+            <h2 class="text-center">Gestión de Prestamos</h2>
+            <!-- 
 
+              Aca va el contenido de la pagina
 
-            <h2 class="text-center">main</h2>
+             -->
         </div>
     </div>
 

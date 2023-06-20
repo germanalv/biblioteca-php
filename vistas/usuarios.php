@@ -1,5 +1,5 @@
 <?php
-$sidebar_op = 1; /* Maco como activo el menu "Prestamos" */
+$sidebar_op = 3; /* Maco como activo el menu "Usuarios" */
 
 ?>
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ $sidebar_op = 1; /* Maco como activo el menu "Prestamos" */
     <div class="d-flex flex-column p-3 w-100">
         <div class="container">
             <!-- Contenedor Principal -->
-            <h2 class="text-center">Ejemplo de pagina</h2>
+            <h2 class="text-center">Gestión de Usuarios</h2>
             <!-- 
 
               Aca va el contenido de la pagina
