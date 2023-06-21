@@ -1,4 +1,5 @@
 <?php
+
 require '../db/connDB.php';
 
 class Libro{
@@ -13,7 +14,8 @@ class Libro{
     /**
      * Class constructor.
      */
-    public function __construct($pTitulo, $pAutor, $pGenero, $pAnio, $pCant_ejemplares){
+    public function __construct($pId, $pTitulo, $pAutor, $pGenero, $pAnio, $pCant_ejemplares){
+        $this->id = $pId;
         $this->titulo = $pTitulo;
         $this->autor = $pAutor;
         $this->genero = $pGenero;
@@ -61,22 +63,34 @@ class Libro{
     }
     public function setCantEjemplares($pCantEjemplares){
         $this->cant_ejemplares = $pCantEjemplares;
-    }    
+    }
     
 
-    public function grabarLibro(){
+    public function getLibros(){
 
         try {
             $conn =  connDB();
+            $sql = "SELECT * FROM libros";
+            $resultado = $conn->query($sql);
             
-            $sql = "INSERT INTO cursos (nombre, fecha) VALUE ('".$nombre."','".$fecha."')";
+            $listaLibros = array();
+
+            while ($fila = $resultado->fetch_assoc()) {
+                $libro = new Libro($fila['id'], $fila['titulo'], $fila['autor'], $fila['genero'], $fila['anio'], $fila['cant_ejemplares']);
+                $listaLibros[] = $libro;
+            }
 
             $conn->close();
+            return $listaLibros;
+
+            
         } catch (Exception $e) {
             echo 'Error: ',  $e->getMessage(), "\n";
         }
         
     }
+
+}
 
 
 ?>

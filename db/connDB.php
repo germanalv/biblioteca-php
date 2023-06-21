@@ -5,7 +5,7 @@ function connDB(){
     $dbuser = "root";
     $dbpass = "";
     $dbname = "biblioteca";
-    return new mysqli('localhost', 'root', '', 'biblioteca');
+    return new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 }
 
 

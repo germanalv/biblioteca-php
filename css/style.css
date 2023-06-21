@@ -14,3 +14,7 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
   }
+
+  .frame{
+    overflow-y: auto;
+  }

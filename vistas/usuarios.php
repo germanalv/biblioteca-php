@@ -14,7 +14,7 @@ $sidebar_op = 3; /* Maco como activo el menu "Usuarios" */
     <?php include '../layout/sidebar.php';?>
   
 
-    <div class="d-flex flex-column p-3 w-100">
+    <div class="d-flex flex-column p-3 w-100 frame">
         <div class="container">
             <!-- Contenedor Principal -->
             <h2 class="text-center">Gestión de Usuarios</h2>

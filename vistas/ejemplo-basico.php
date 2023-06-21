@@ -14,7 +14,7 @@ $sidebar_op = 1; /* Maco como activo el menu "Prestamos" */
     <?php include '../layout/sidebar.php';?>
   
 
-    <div class="d-flex flex-column p-3 w-100">
+    <div class="d-flex flex-column p-3 w-100 frame">
         <div class="container">
             <!-- Contenedor Principal -->
             <h2 class="text-center">Ejemplo de pagina</h2>
