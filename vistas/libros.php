@@ -32,7 +32,7 @@ $sidebar_op = 2; /* Maco como activo el menu "Libros" */
             <hr>
             <div class="row">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-success mb-2">Registrar Libro</button>
+                <a href="libros-crear.php" class="btn btn-success mb-2">Registrar Libro</a>
               </div>
             </div>
             <div class="row">
