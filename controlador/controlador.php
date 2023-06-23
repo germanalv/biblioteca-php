@@ -5,6 +5,29 @@ include ('../modelos/clslibro.php');
 /*********************************************************/
 /******************* Funciones Libros ********************/
 /*********************************************************/
+function addLibro($objLibro){
+    // var_dump($objLibro);
+    
+    try {
+        $conn =  connDB();
+        $sql = "INSERT INTO libros (titulo, autor, genero, anio, cant_ejemplares) 
+                VALUES('".$objLibro->getTitulo()."', '".$objLibro->getAutor()."', '".$objLibro->getGenero()."', 
+                ".$objLibro->getAnio().", ".$objLibro->getCantEjemplares().")";
+        //echo $sql;
+        if ($conn->query($sql) === TRUE) {
+            $id = $conn->insert_id;
+            $conn->close();
+            return $id;
+        }else{  
+            $conn->close();
+            return false;
+        }
+
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+}
+
 
 function getLibros(){
 
@@ -20,7 +43,7 @@ function getLibros(){
         $conn->close();
         return $listaLibros;
     } catch (Exception $e) {
-        echo 'Error: ',  $e->getMessage(), "\n";
+        return $e->getMessage();
     }
     
 }

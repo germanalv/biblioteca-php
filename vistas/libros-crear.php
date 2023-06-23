@@ -1,9 +1,11 @@
 <?php
+require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-
-
 $sidebar_op = 2; /* Maco como activo el menu "Libros" */
 
+$nuevo_libro = new Libro(0, 'Libro 1', 'Carlos', 'Comedia', 2007, 5);
+
+echo addLibro($nuevo_libro);
 
 ?>
 <!DOCTYPE html>
