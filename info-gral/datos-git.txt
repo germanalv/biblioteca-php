@@ -1,8 +1,17 @@
 echo "# biblioteca-php" >> README.md
 
+ir al directorio donde voy a descargar el proyecto (C:\xampp\htdocs)
+
 git clone https://github.com/germanalv/biblioteca-php.git
+git add.                    sube los cambios de un archivo/s que queres commitear, no todo el proyecto.
+git commit -m "Primer commit"                 
+git push -u origin main
 
 
+
+
+
+Esto es para iniciar un proyecto de 0
 git init
 git add README.md
 git commit -m "first commit"

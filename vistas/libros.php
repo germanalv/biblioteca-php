@@ -4,7 +4,7 @@ require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 
 
-$sidebar_op = 2; /* Maco como activo el menu "Libros" */
+$sidebar_op = 2; /* Marco como activo el menu "Libros" */
 
 
 ?>
@@ -16,7 +16,7 @@ $sidebar_op = 2; /* Maco como activo el menu "Libros" */
 
 <body>
   <main class="d-flex flex-nowrap">
-    <!-- Manu -->
+    <!-- Menu -->
     <?php include '../layout/sidebar.php';?>
   
 

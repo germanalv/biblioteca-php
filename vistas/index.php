@@ -18,12 +18,12 @@ $sidebar_op = 1; /* Maco como activo el menu "Prestamos" */
         <div class="container">
             <!-- Contenedor Principal -->
             <div class="row">
-              <h2 class="text-center">Gestión de Prestamos</h2>
+              <h2 class="text-center">Gestión de Préstamos</h2>
             </div>
             <hr>
             <div class="row">
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary mb-2">Registrar Prestamo</button>
+                <button class="btn btn-primary mb-2">Registrar Préstamo</button>
               </div>
             </div>
             <div class="row">
@@ -32,7 +32,7 @@ $sidebar_op = 1; /* Maco como activo el menu "Prestamos" */
                   <tr>
                     <th scope="col">Libro</th>
                     <th scope="col">Usuario</th>
-                    <th scope="col">Fecha Prestamo</th>
+                    <th scope="col">Fecha Préstamo</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>

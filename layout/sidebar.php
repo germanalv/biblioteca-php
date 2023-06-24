@@ -19,13 +19,13 @@ switch ($sidebar_op) {
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-          <span class="fs-4">Bliblioteca</span>
+          <span class="fs-4">Biblioteca</span>
       </a>
       <hr>
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a href="index.php" class="nav-link <?=$prestamos_opc?>" aria-current="page">
-              Prestamos
+              Préstamos
           </a>
         </li>
         <li>
@@ -35,7 +35,7 @@ switch ($sidebar_op) {
         </li>
         <li>
           <a href="usuarios.php" class="nav-link <?=$usuarios_opc?>">
-            Usuario
+              Usuarios
           </a>
         </li>
       </ul>
