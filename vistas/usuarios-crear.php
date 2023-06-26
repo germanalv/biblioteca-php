@@ -25,11 +25,11 @@ $ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["ci"])) {
-    $idError = "Inserte CI del usuario";
+    $ciError = "Inserte la CI del usuario";
   } else {
     $ci = test_input($_POST["ci"]);
     // check if name only contains numbers and whitespace
-    if (!preg_match("/^[0-9.-]{11}+$/",$ci)) {
+    if (!preg_match("/^[0-9-. ]+$/",$ci)) {
       $ciError = "Solo se permiten números, puntos y guiones";
     }
   }
@@ -111,28 +111,49 @@ function test_input($data) {
                   <input type="text" class="form-control" name="ci">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Nombre</label></label><span class="error">* <?php echo $nombreError;?></span>
+                  <label for="" class="form-label">Nombre</label><span class="error">* <?php echo $nombreError;?></span>
                   <input type="text" class="form-control" name="nombre">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Apellido</label></label><span class="error">* <?php echo $apellidoError;?></span>
+                  <label for="" class="form-label">Apellido</label><span class="error">* <?php echo $apellidoError;?></span>
                   <input type="text" class="form-control" name="apellido">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Email</label></label><span class="error">* <?php echo $mailError;?></span>
+                  <label for="" class="form-label">Email</label><span class="error">* <?php echo $mailError;?></span>
                   <input type="text" class="form-control" name="mail">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Teléfono</label></label><span class="error">* <?php echo $telError;?></span>
+                  <label for="" class="form-label">Teléfono</label><span class="error">* <?php echo $telError;?></span>
                   <input type="text" class="form-control" name="tel">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Dirección</label></label><span class="error">* <?php echo $dirError;?></span>
+                  <label for="" class="form-label">Dirección</label><span class="error">* <?php echo $dirError;?></span>
                   <input type="text" class="form-control" name="dir">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Guardar Usuario</button>
               </form>
+
+              <?php
+                  echo $ci;
+                  echo "<br>";
+                  echo $nombre;
+                  echo "<br>";
+                  echo $apellido;
+                  echo "<br>";
+                  echo $mail;
+                  echo "<br>";
+                  echo $tel;
+                  echo "<br>";
+                  echo $dir;
+                  echo "<br>";
+                  echo "<br>";
+                if(!empty($data)){
+                  $nuevoUsuario = new Usuario (0, $ci, $nombre, $apellido, $mail, $tel, $dir);
+                  echo addUsuario($nuevoUsuario);
+                }
+              ?>
+
               </div>
             </div>
 

@@ -87,7 +87,7 @@ function addUsuario($objUsuario){
         $conn =  connDB();
         $sql = "INSERT INTO usuarios (ci, nombre, apellido, mail, tel, dir) 
                 VALUES('".$objUsuario->getCi()."', '".$objUsuario->getNombre()."', '".$objUsuario->getApellido()."', 
-                ".$objUsuario->getMail().", ".$objUsuario->getTel().", ".$objUsuario->getDir().")";
+                '".$objUsuario->getMail()."', '".$objUsuario->getTel()."', '".$objUsuario->getDir()."')";
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
