@@ -3,9 +3,57 @@ require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 $sidebar_op = 2; /* Maco como activo el menu "Libros" */
 
-//$nuevo_libro = new Libro(0, 'Libro 1', 'Carlos', 'Comedia', 2007, 5);
+$titulo = $autor = $anio = $genero = $CantEjemplares = "";
+$tituloError = $autorError = $anioError = $generoError = $CantEjemplaresError = "";
 
-//echo addLibro($nuevo_libro);
+if(isset($_POST['submit'])){
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    /* Validación Titulo 
+    **************************/
+    $titulo = test_input($_POST["titulo"]);
+    if (empty($titulo)) {
+      $tituloError = "Inserte la titulo del libro";
+    }elseif (!preg_match("/^[a-zA-Z-' ]*$/",$titulo)) {
+      $nombreError = "Solo se permiten letras y espacios en blanco";
+    }
+
+    /* Validación Autor
+    **************************/
+    $autor = test_input($_POST["autor"]);
+    if (empty($autor)) {
+      $autorError = "Inserte el autor de libro";
+    }elseif (!preg_match("/^[a-zA-Z-' ]*$/",$autor)) {
+      $autorError = "Solo se permiten letras y espacios en blanco";
+    }
+
+    /* Validación Genero
+    **************************/
+    $genero = test_input($_POST["genero"]);
+    if ($genero == '0') {
+      $generoError = "Inserte el genero de libro"; /* OJO ACA!!!!!!! */
+    }
+
+    /* Validación Año
+    **************************/
+    $anio = test_input($_POST["anio"]); 
+    if (empty($anio)) {
+      $anioError = "Inserte el año del libro";
+    }elseif (!preg_match("/^[0-9]*$/",$anio)) {
+      $anioError = "Solo se permiten números";
+    }
+
+    /* Validación Cantidad de Ejemplares
+    **************************/
+    $CantEjemplares = test_input($_POST["CantEjemplares"]); 
+    if (empty($CantEjemplares)) {
+      $CantEjemplaresError = "Inserte el año del libro";
+    }elseif (!preg_match("/^[0-9]*$/",$CantEjemplares)) {
+      $CantEjemplaresError = "Solo se permiten números";
+    }
+
+  }
+}
 
 ?>
 <!DOCTYPE html>
@@ -29,7 +77,9 @@ $sidebar_op = 2; /* Maco como activo el menu "Libros" */
             <hr>
             <div class="row justify-content-center">
               <div class="col-6 border-end border-start">
-              <form class="">
+              <form class="" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+
+
                 <div class="mb-3">
                   <label for="" class="form-label">Titulo</label>
                   <input type="text" class="form-control" name="titulo">
@@ -40,15 +90,39 @@ $sidebar_op = 2; /* Maco como activo el menu "Libros" */
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Genero</label>
-                  <input type="text" class="form-control" name="genero">
+
+                  <select class="form-select" aria-label="" name="genero">
+                    <option value="0">Seleccionar Genero</option>
+                    <option value="comedia">Comedia</option>
+                    <option value="drama">Drama</option>
+                    <option value="novela">Novela</option>
+                    <option value="informatica">Informatica</option>
+                    <option value="ciencia">Ciencia</option>
+                    <option value="fantasia">Fantasia</option>
+                  </select>
+
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Año</label>
-                  <input type="text" class="form-control" name="anio">
+                  <select class="form-select" aria-label="" name="anio">
+                    <?php
+                    for ($i = 1900; $i < date("Y"); $i++) {
+                      echo "<option value='".$i."'>".$i."</option>";
+                    }
+                    ?>
+                  </select>
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Cantidad de Ejemplares</label>
-                  <input type="text" class="form-control" name="anio">
+
+                  <select class="form-select" aria-label="" name="CantEjemplares">
+                    <?php
+                    for ($i = 0; $i < 50; $i++) {
+                      echo "<option value='".$i."'>".$i."</option>";
+                    }
+                    ?>
+                  </select>
+                  
                 </div>
 
                 <button type="submit" class="btn btn-primary">Guardar Libro</button>

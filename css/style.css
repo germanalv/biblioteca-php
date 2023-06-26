@@ -18,3 +18,5 @@ body {
   .frame{
     overflow-y: auto;
   }
+
+  .error {color: #FF0000;}

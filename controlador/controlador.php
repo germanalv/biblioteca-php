@@ -1,9 +1,14 @@
 <?php
+require '../db/connDB.php';
 include ('../modelos/clslibro.php');
-
 include ('../modelos/clsusuario.php');
 
-
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
 
 
 /*********************************************************/
@@ -24,7 +29,7 @@ function addLibro($objLibro){
             return $id;
         }else{  
             $conn->close();
-            return false;
+            return -1;
         }
 
     } catch (Exception $e) {
@@ -75,31 +80,86 @@ function getUsuarios(){
 
         
     } catch (Exception $e) {
-        echo 'Error: ',  $e->getMessage(), "\n";
+        return 'Error: '.  $e->getMessage(). "\n";
     }
     
 }
 
-function addUsuario($objUsuario){
-    // var_dump($objUsuario);
-    
+function getUsuario($id){
+
     try {
         $conn =  connDB();
-        $sql = "INSERT INTO usuarios (ci, nombre, apellido, mail, tel, dir) 
+        $sql = "SELECT * FROM usuarios WHERE id = ".$id;
+        $resultado = $conn->query($sql);
+        $fila = $resultado->fetch_assoc();
+        $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
+        $conn->close();
+        
+        return $usuario;        
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+    
+}
+
+
+function setUsuario($usuario){
+    try {
+        $conn =  connDB();
+        $sql = "UPDATE usuarios SET ci = '".$usuario->getCi()."', nombre = '".$usuario->getNombre()."', apellido = '".$usuario->getApellido()."', mail = '".$usuario->getMail()."', tel = '".$usuario->getTel()."', dir = '".$usuario->getDir()."' WHERE id = ".$usuario->getId();
+
+        if ($conn->query($sql) === TRUE) {
+            $id = $conn->insert_id;
+
+            $respuesta['estado'] = 1;
+            $respuesta['resp'] = 'OK';
+
+            $conn->close();
+            return $respuesta;
+        }else{  
+            $conn->close();
+            $respuesta['estado'] = 0;
+            $respuesta['resp'] = "No se pudo actualizar el usuario";
+            return $respuesta;
+        }
+             
+    } catch (Exception $e) {
+        $respuesta['estado'] = 0;
+        $respuesta['resp'] = "No se pudo actualiazr el usuario<br>ERROR: ".$e->getMessage();
+        return $respuesta;
+    }
+}
+
+
+
+function addUsuario($objUsuario){
+    //var_dump($objUsuario);
+    $respuesta = [];
+    try {
+        $conn =  connDB();
+        $sql = "INSERT INTO usuarios (ci, nombre, apellido, mail, tel, dir, password) 
                 VALUES('".$objUsuario->getCi()."', '".$objUsuario->getNombre()."', '".$objUsuario->getApellido()."', 
-                '".$objUsuario->getMail()."', '".$objUsuario->getTel()."', '".$objUsuario->getDir()."')";
+                '".$objUsuario->getMail()."', '".$objUsuario->getTel()."', '".$objUsuario->getDir()."', '123456')";
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
+
+            $respuesta['estado'] = 1;
+            $respuesta['resp'] = $id;
+
             $conn->close();
-            return $id;
+            return $respuesta;
         }else{  
             $conn->close();
-            return false;
+            $respuesta['estado'] = 0;
+            $respuesta['resp'] = "No se pudo ingresar el usuario";
+            return $respuesta;
         }
 
     } catch (Exception $e) {
-        return $e->getMessage();
+        $respuesta['estado'] = 0;
+        $respuesta['resp'] = "No se pudo ingresar el usuario<br>ERROR: ".$e->getMessage();
+        return $respuesta;
     }
 }
 

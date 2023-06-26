@@ -1,7 +1,5 @@
 <?php
 
-require '../db/connDB.php';
-
 class Prestamo{
 
     private $id;
@@ -65,30 +63,6 @@ class Prestamo{
         $this->estado = $pEstado;
     }
 
-
-    public function getPrestamos(){
-
-        try {
-            $conn =  connDB();
-            $sql = "SELECT * FROM prestamo";
-            $resultado = $conn->query($sql);
-            
-            $listaPrestamos = array();
-
-            while ($fila = $resultado->fetch_assoc()) {
-                $prestamo = new prestamo($fila['id'], $fila['id_libro'], $fila['id_usuario'], $fila['fecha_prestamo'], $fila['fecha_devolución'], $fila['estado']);
-                $listaPrestamos[] = $prestamo;
-            }
-
-            $conn->close();
-            return $listaPrestamos;
-
-            
-        } catch (Exception $e) {
-            echo 'Error: ',  $e->getMessage(), "\n";
-        }
-        
-    }
 }
 
 ?>

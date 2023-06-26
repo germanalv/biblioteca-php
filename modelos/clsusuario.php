@@ -73,30 +73,6 @@ class Usuario{
         $this->dir = $pDir;
     }
 
-
-    public function getUsuarios(){
-
-        try {
-            $conn =  connDB();
-            $sql = "SELECT * FROM usuarios";
-            $resultado = $conn->query($sql);
-            
-            $listaUsuarios = array();
-
-            while ($fila = $resultado->fetch_assoc()) {
-                $usuario = new usuarios($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
-                $listaUsuarios[] = $usuario;
-            }
-
-            $conn->close();
-            return $listaUsuarios;
-
-            
-        } catch (Exception $e) {
-            echo 'Error: ',  $e->getMessage(), "\n";
-        }
-        
-    }
 }
 
 ?>

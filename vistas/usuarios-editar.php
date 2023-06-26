@@ -10,10 +10,22 @@ $respuesta = "";
 $nuevo_usuario = "";
 
 
+/* Obtengo los datos del usuario a editar 
+********************************************/
+$idUsuario = $_GET['id'];
+if (!empty($idUsuario)) {
+  $usuario = getUsuario($idUsuario);
+  var_dump($usuario);
+  
+}
 
-if(isset($_POST['submit'])){
+
+if(isset($_POST['submit'])){  
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+
 
     /* Validación Cedula 
     **************************/
@@ -88,6 +100,8 @@ if(isset($_POST['submit'])){
     }
 
   }
+}elseif(isset($_POST['btnEliminar'])){
+  //Eliminación
 }
 
 ?>
@@ -128,7 +142,7 @@ if(isset($_POST['submit'])){
 
                 <div class="mb-3">
                   <label for="" class="form-label">CI</label><span class="error">* <?php echo $ciError;?></span>
-                  <input type="text" class="form-control" name="ci">
+                  <input type="text" class="form-control" name="ci" value="<?=$usuario->getCi()?>">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Nombre</label><span class="error">* <?php echo $nombreError;?></span>
