@@ -1,10 +1,9 @@
 <?php
-require('../general/vizualizar_errores.php');
-
+//require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-
-
+checkLogin();
 $sidebar_op = 2; /* Marco como activo el menu "Libros" */
+
 
 
 ?>

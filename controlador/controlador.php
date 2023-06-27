@@ -1,7 +1,9 @@
 <?php
+session_start();
 require '../db/connDB.php';
 include ('../modelos/clslibro.php');
 include ('../modelos/clsusuario.php');
+
 
 function test_input($data) {
     $data = trim($data);
@@ -141,14 +143,18 @@ function getUsuarioByMail($mail){
 }
 
 /* German 27/06/2023 */
-function validateLogin($mail, $pass){
+function login($mail, $pass){
     try {
         $conn =  connDB();
         $sql = "SELECT * FROM usuarios WHERE mail = '".$mail."' AND  password = '".$pass."'";
         $resultado = $conn->query($sql);
         $fila = $resultado->fetch_assoc();
         $conn->close();
-        if( !empty($fila) ) { 
+        if( !empty($fila) ) {
+            $usu = getUsuarioByMail($mail);
+            $_SESSION["nombre"] = $usu->getNombre();
+            $_SESSION["apellido"] = $usu->getApellido();
+            $_SESSION["mail"] = $usu->getMail();
             return true;
         } else { 
             return false;
@@ -157,6 +163,20 @@ function validateLogin($mail, $pass){
         return $e->getMessage();
     }
 }
+
+function checkLogin(){
+    if ( empty($_SESSION['nombre']) ) {
+        header("Location: login.php");
+    }
+}
+
+function logout(){
+    echo "Paso 3";
+    session_destroy();
+    echo "Paso 4";
+    header("Location: login.php");
+}
+
 
 function setUsuario($usuario){
     try {

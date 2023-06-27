@@ -1,6 +1,7 @@
 <?php
-require('../general/vizualizar_errores.php');
+//require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
+checkLogin();
 $sidebar_op = 3; /* Maco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.

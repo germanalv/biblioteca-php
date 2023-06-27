@@ -1,3 +1,3 @@
 <?php 
-header("Location: vistas/index.php");
+header("Location: vistas/login.php");
 ?>

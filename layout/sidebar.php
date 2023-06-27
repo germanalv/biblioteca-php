@@ -1,5 +1,5 @@
-
 <?php
+session_start();
 $prestamos_opc = "text-white";
 $libros_opc = "text-white";
 $usuarios_opc = "text-white";
@@ -41,19 +41,26 @@ switch ($sidebar_op) {
       </ul>
 
 
-      <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-          <strong>mdo</strong>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-          <li><a class="dropdown-item" href="#">New project...</a></li>
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
-      </ul>
+      <?php
+      
+      if ( !empty($_SESSION['nombre']) ) {
+
+      ?>
+      <div class="dropdown mb-4">
+        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+            <strong><?=$_SESSION['nombre']?></strong>
+        </a>
+        <form class="" method="post" action="logout.php">
+          <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+              <!-- <li><a class="dropdown-item" href="#" name="logout">Sign out</a></li> -->
+              <button class="dropdown-item" name="logout">Sign out</button>
+          </ul>
+        </form>
       </div>
+      <?php
+      }
+      ?>
 
 
 </div>
