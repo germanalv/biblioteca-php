@@ -4,81 +4,66 @@ require('../controlador/controlador.php');
 $sidebar_op = 3; /* Marco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
-$ci = $nombre = $apellido = $mail = $tel = $dir = "";
-$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = "";
+$titulo = $autor = $anio = $genero = $CantEjemplares = "";
+$tituloError = $autorError = $anioError = $generoError = $CantEjemplaresError = "";
 $respuesta = "";
-$nuevo_usuario = "";
+$nuevo_libro = "";
 
 
-/* Obtengo los datos del usuario a editar 
+/* Obtengo los datos del libro a editar 
 ********************************************/
-$idUsuario = $_GET['id'];
-if (!empty($idUsuario)) {
-  $usuario = getUsuario($idUsuario);
-  var_dump($usuario);
+$idLibro = $_GET['id'];
+if (!empty($idLibro)) {
+  $libro = getLibro($idLibro);
+  var_dump($libro);
   
 }
-
 
 if(isset($_POST['submit'])){  
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-
-
-
-    /* Validación Cedula 
+    /* Validación Titulo 
     **************************/
-    $ci = test_input($_POST["ci"]);
-    if (empty($ci)) {
-      $ciError = "Inserte la CI del usuario";
-    }elseif (!preg_match("/^[0-9-. ]+$/",$ci)) {
-      $ciError = "Solo se permiten números, puntos y guiones";
-    }
-
-    /* Validación Nombre
-    **************************/
-    $nombre = test_input($_POST["nombre"]);
-    if (empty($nombre)) {
-      $nombreError = "Inserte nombre del usuario";
-    }elseif (!preg_match("/^[a-zA-Z-' ]*$/",$nombre)) {
+    $titulo = test_input($_POST["titulo"]);
+    if (empty($titulo)) {
+      $tituloError = "Inserte la titulo del libro";
+    }elseif (!preg_match("/^[a-zA-Z-' ]*$/",$titulo)) {
       $nombreError = "Solo se permiten letras y espacios en blanco";
     }
 
-    /* Validación Apellido
+    /* Validación Autor
     **************************/
-    $apellido = test_input($_POST["apellido"]);
-    if (empty($apellido)) {
-      $apellidoError = "Inserte el apellido del usuario";
-    }elseif (!preg_match("/^[a-zA-Z-' ]*$/",$apellido)) {
-      $apellidoError = "Solo se permiten letras y espacios en blanco";
+    $autor = test_input($_POST["autor"]);
+    if (empty($autor)) {
+      $autorError = "Inserte el autor de libro";
+    }elseif (!preg_match("/^[a-zA-Z-' ]*$/",$autor)) {
+      $autorError = "Solo se permiten letras y espacios en blanco";
     }
 
-    /* Validación Mail
+    /* Validación Genero
     **************************/
-    $mail = test_input($_POST["mail"]);
-    if (empty($mail)) {
-      $mailError = "Inserte el mail del usuario";
-    }elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
-      $mailError = "Formato de email inválido";
+    $genero = test_input($_POST["genero"]);
+    if ($genero == '0') {
+      $generoError = "Inserte el genero de libro"; /* OJO ACA!!!!!!! */
     }
 
-    /* Validación Telefono
+    /* Validación Año
     **************************/
-    $tel = test_input($_POST["tel"]); 
-    if (empty($tel)) {
-      $telError = "Inserte el teléfono del usuario";
-    }elseif (!preg_match("/^[0-9]*$/",$tel)) {
-      $telError = "Solo se permiten números";
+    $anio = test_input($_POST["anio"]); 
+    if (empty($anio)) {
+      $anioError = "Inserte el año del libro";
+    }elseif (!preg_match("/^[0-9]*$/",$anio)) {
+      $anioError = "Solo se permiten números";
     }
 
-    /* Validación Direccion
+    /* Validación Cantidad de Ejemplares
     **************************/
-    $dir = test_input($_POST["dir"]);
-    if (empty($dir)) {
-      $dirError = "Inserte la dirección del usuario";
-    }elseif (!preg_match("/^[a-zA-Z-0-9' ]*$/",$dir)) {
-      $dirError = "Solo se permiten letras, números y espacios en blanco";
+    $CantEjemplares = test_input($_POST["CantEjemplares"]); 
+    if (empty($CantEjemplares)) {
+      $CantEjemplaresError = "Inserte el año del libro";
+    }elseif (!preg_match("/^[0-9]*$/",$CantEjemplares)) {
+      $CantEjemplaresError = "Solo se permiten números";
     }
 
     if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 

@@ -1,8 +1,9 @@
 <?php
 require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-$sidebar_op = 2; /* Maco como activo el menu "Libros" */
+$sidebar_op = 2; /* Marco como activo el menu "Libros" */
 
+// Seteo e inicializo variables vacias.
 $titulo = $autor = $anio = $genero = $CantEjemplares = "";
 $tituloError = $autorError = $anioError = $generoError = $CantEjemplaresError = "";
 
@@ -52,6 +53,24 @@ if(isset($_POST['submit'])){
       $CantEjemplaresError = "Solo se permiten números";
     }
 
+    if( (!empty($tituloError)) || (!empty($autorError)) || (!empty($anioError)) || 
+        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) ){
+
+          
+
+    }else{
+      // Grabar usuario
+      $nuevo_usuario = new Usuario (0, $ci, $nombre, $apellido, $mail, $tel, $dir);
+      $respuesta = addUsuario($nuevo_usuario);
+
+      if (!empty($respuesta)) {
+        if($respuesta['estado'] == 1){
+          header("Location: usuarios.php?idusu=".$respuesta['resp']);
+        }
+      }
+
+    }
+
   }
 }
 
@@ -79,17 +98,24 @@ if(isset($_POST['submit'])){
               <div class="col-6 border-end border-start">
               <form class="" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 
+                <?php 
+                if (!empty($respuesta) && ($respuesta['estado'] == 0) ) {
+                ?>
+                    <div class="alert alert-danger" role="alert my-2"><?=$respuesta['resp']?></div>
+                <?php 
+                } 
+                ?>
 
                 <div class="mb-3">
-                  <label for="" class="form-label">Titulo</label>
+                  <label for="" class="form-label">Titulo</label><span class="error">* <?php echo $tituloError;?></span>
                   <input type="text" class="form-control" name="titulo">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Autor</label>
+                  <label for="" class="form-label">Autor</label><span class="error">* <?php echo $autorError;?></span>
                   <input type="text" class="form-control" name="autor">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Genero</label>
+                  <label for="" class="form-label">Genero</label><span class="error">* <?php echo $generoError;?></span>
 
                   <select class="form-select" aria-label="" name="genero">
                     <option value="0">Seleccionar Genero</option>
@@ -103,7 +129,7 @@ if(isset($_POST['submit'])){
 
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Año</label>
+                  <label for="" class="form-label">Año</label><span class="error">* <?php echo $anioError;?></span>
                   <select class="form-select" aria-label="" name="anio">
                     <?php
                     for ($i = 1900; $i < date("Y"); $i++) {
@@ -113,7 +139,7 @@ if(isset($_POST['submit'])){
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Cantidad de Ejemplares</label>
+                  <label for="" class="form-label">Cantidad de Ejemplares</label><span class="error">* <?php echo $CantEjemplaresError;?></span>
 
                   <select class="form-select" aria-label="" name="CantEjemplares">
                     <?php

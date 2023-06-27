@@ -1,7 +1,7 @@
 <?php
 require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-$sidebar_op = 3; /* Maco como activo el menu "Libros" */
+$sidebar_op = 3; /* Marco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
 $ci = $nombre = $apellido = $mail = $tel = $dir = "";
@@ -123,8 +123,6 @@ if(isset($_POST['submit'])){
                 <?php 
                 } 
                 ?>
-                    
-                
 
                 <div class="mb-3">
                   <label for="" class="form-label">CI</label><span class="error">* <?php echo $ciError;?></span>

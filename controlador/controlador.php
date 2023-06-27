@@ -180,7 +180,7 @@ function setUsuario($usuario){
              
     } catch (Exception $e) {
         $respuesta['estado'] = 0;
-        $respuesta['resp'] = "No se pudo actualiazr el usuario<br>ERROR: ".$e->getMessage();
+        $respuesta['resp'] = "No se pudo actualizar el usuario<br>ERROR: ".$e->getMessage();
         return $respuesta;
     }
 }

@@ -24,7 +24,7 @@ $sidebar_op = 2; /* Marco como activo el menu "Libros" */
         <div class="container">
             <!-- Contenedor Principal -->
             <div class="row">
-              <h2 class="text-center">Gestión de Prestamos</h2>
+              <h2 class="text-center">Gestión de Libros</h2>
             </div>
             <hr>
             <div class="row">
