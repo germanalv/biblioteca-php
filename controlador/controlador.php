@@ -14,6 +14,7 @@ function test_input($data) {
 /*********************************************************/
 /******************* Funciones Libros ********************/
 /*********************************************************/
+
 function addLibro($objLibro){
     // var_dump($objLibro);
     
@@ -25,15 +26,23 @@ function addLibro($objLibro){
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
+
+            $respuesta['estado'] = 1;
+            $respuesta['resp'] = $id;
+
             $conn->close();
-            return $id;
+            return $respuesta;
         }else{  
             $conn->close();
-            return -1;
+            $respuesta['estado'] = 0;
+            $respuesta['resp'] = "No se pudo ingresar el libro";
+            return $respuesta;
         }
 
     } catch (Exception $e) {
-        return $e->getMessage();
+        $respuesta['estado'] = 0;
+        $respuesta['resp'] = "No se pudo ingresar el usuario<br>ERROR: ".$e->getMessage();
+        return $respuesta;
     }
 }
 
@@ -85,6 +94,7 @@ function getUsuarios(){
     
 }
 
+/* German 27/06/2023 */
 function getUsuario($id){
 
     try {
@@ -92,16 +102,61 @@ function getUsuario($id){
         $sql = "SELECT * FROM usuarios WHERE id = ".$id;
         $resultado = $conn->query($sql);
         $fila = $resultado->fetch_assoc();
-        $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
+        //var_dump($fila);
         $conn->close();
-        
-        return $usuario;        
+        if( !empty($fila) ) { 
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
+            return $usuario;
+        } else { 
+            return NULL;
+        }
     } catch (Exception $e) {
         return $e->getMessage();
     }
     
 }
 
+/* $usu = getUsuarioByMail('german@mail.com');
+var_dump($usu); */
+
+/* German 27/06/2023 */
+function getUsuarioByMail($mail){
+
+    try {
+        $conn =  connDB();
+        $sql = "SELECT * FROM usuarios WHERE mail = '".$mail."'";
+        $resultado = $conn->query($sql);
+        $fila = $resultado->fetch_assoc();
+        $conn->close();
+        if( !empty($fila) ) { 
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
+            return $usuario;
+        } else { 
+            return NULL;
+        }
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+    
+}
+
+/* German 27/06/2023 */
+function validateLogin($mail, $pass){
+    try {
+        $conn =  connDB();
+        $sql = "SELECT * FROM usuarios WHERE mail = '".$mail."' AND  password = '".$pass."'";
+        $resultado = $conn->query($sql);
+        $fila = $resultado->fetch_assoc();
+        $conn->close();
+        if( !empty($fila) ) { 
+            return true;
+        } else { 
+            return false;
+        }
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+}
 
 function setUsuario($usuario){
     try {
