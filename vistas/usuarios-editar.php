@@ -1,7 +1,8 @@
 <?php
-require('../general/vizualizar_errores.php');
+//require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-$sidebar_op = 3; /* Marco como activo el menu "Libros" */
+checkLogin();
+$sidebar_op = 3; /* Maco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
 $ci = $nombre = $apellido = $mail = $tel = $dir = "";

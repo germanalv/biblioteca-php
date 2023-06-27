@@ -1,6 +1,7 @@
 <?php
+require('../controlador/controlador.php');
 $sidebar_op = 1; /* Maco como activo el menu "Prestamos" */
-
+checkLogin();
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -2,10 +2,14 @@
 //require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 
+
+/* Valido si existe un usuario logueado 
+****************************************/
+
+
 // Seteo e inicializo variables vacias.
 $mail = $pass = "";
 $mailError = $passError = $error = "";
-
 if(isset($_POST['submit'])){
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* Validación Mail
@@ -25,12 +29,13 @@ if(isset($_POST['submit'])){
         }
 
         if ( empty($mailError) || empty($passError) ) {
-            if( validateLogin($mail, $pass) ){
-                $_SESSION["username"] = $mail;
+
+            if(login($mail, $pass) ){
                 header("Location: index.php");
             }else{
                 $error = "Nombre de usuario o contraseña incorrectos.<br>";
             }
+
         }
 
     }

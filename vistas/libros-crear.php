@@ -1,7 +1,9 @@
 <?php
-require('../general/vizualizar_errores.php');
+//require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-$sidebar_op = 2; /* Marco como activo el menu "Libros" */
+$sidebar_op = 2; /* Maco como activo el menu "Libros" */
+session_start();
+checkLogin();
 
 // Seteo e inicializo variables vacias.
 $titulo = $autor = $anio = $genero = $CantEjemplares = "";
