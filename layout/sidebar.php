@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 $prestamos_opc = "text-white";
 $libros_opc = "text-white";
 $usuarios_opc = "text-white";

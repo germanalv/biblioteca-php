@@ -55,19 +55,19 @@ if(isset($_POST['submit'])){
       $CantEjemplaresError = "Solo se permiten números";
     }
 
-    if( (!empty($tituloError)) || (!empty($autorError)) || (!empty($anioError)) || 
-        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) ){
+    if( (!empty($tituloError)) || (!empty($autorError)) || (!empty($generoError)) || 
+      (!empty($anioError)) || (!empty($CantEjemplaresError)) ){
 
-          
+
 
     }else{
-      // Grabar usuario
-      $nuevo_usuario = new Usuario (0, $ci, $nombre, $apellido, $mail, $tel, $dir);
-      $respuesta = addUsuario($nuevo_usuario);
+      // Agregar libro
+      $nuevo_libro = new Libro (0, $titulo, $autor, $genero, $anio, $CantEjemplares);
+      $respuesta = addLibro($nuevo_libro);
 
       if (!empty($respuesta)) {
         if($respuesta['estado'] == 1){
-          header("Location: usuarios.php?idusu=".$respuesta['resp']);
+          header("Location: libros.php?idusu=".$respuesta['resp']);
         }
       }
 

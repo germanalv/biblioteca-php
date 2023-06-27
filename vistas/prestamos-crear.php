@@ -2,23 +2,48 @@
 //require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 checkLogin();
-$sidebar_op = 3; /* Maco como activo el menu "Libros" */
+$sidebar_op = 1; /* Maco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
-$idUsuario = "";
-$idUsuarioError =  "";
-
+$idLibro = $idUsuario = $fecha_prestamo = $fecha_devolucion = $estado = "";
+$idLibroError = $idUsuarioError = $fecha_prestamoError = $fecha_devolucionError = $estadoError = "";
 
 $respuesta = "";
-$nuevo_usuario = "";
-
-
+$nuevo_prestamo = "";
 
 if(isset($_POST['submit'])){
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-   
+    /* Validación Genero
+    **************************/
+    $idUsuario = test_input($_POST["usuario"]);
+    if ($idUsuario == '0') {
+      $idUsuarioError = "Elija un usuario"; /* OJO ACA!!!!!!! */
+    }
+
+    /* Validación Genero
+    **************************/
+    $idLibro = test_input($_POST["libro"]);
+    if ($idLibro == '0') {
+      $idLibroError = "Ejija un libro"; /* OJO ACA!!!!!!! */
+    }
+
+    if( (!empty($idLibroError)) || (!empty($idUsuarioError)) ){
+
+
+
+    }else{
+      // Agregar préstamo
+      $nuevo_prestamo = new Prestamo (0, $idLibro, $idUsuario, $fecha_prestamo, $fecha_devolucion, $estado);
+      $respuesta = addPrestamo($nuevo_prestamo);
+
+      if (!empty($respuesta)) {
+        if($respuesta['estado'] == 1){
+          header("Location: index.php?idusu=".$respuesta['resp']);
+        }
+      }
+    }
 
   }
 }
@@ -41,7 +66,7 @@ if(isset($_POST['submit'])){
         <div class="container">
             <!-- Contenedor Principal -->
             <div class="row">
-              <h1 class="text-center">Registrar Usuario</h1>
+              <h1 class="text-center">Registrar Préstamo</h1>
             </div>
             <hr>
             <div class="row justify-content-center">
@@ -60,12 +85,25 @@ if(isset($_POST['submit'])){
                 
 
                 <div class="mb-3">
-                  <label for="" class="form-label">CI</label><span class="error">* <?php echo $idUsuarioError;?></span>
+                  <label for="" class="form-label">Usuario</label><span class="error">* <?php echo $idUsuarioError;?></span>
                   <select class="form-select" aria-label="" name="usuario">
+                    <option value="0">Seleccionar usuario</option>
                     <?php
                     $usuarios = getUsuarios();
                     foreach ($usuarios as $usuario) {
                       echo "<option value='".$usuario->getId()."'>".$usuario->getNombre()." ".$usuario->getApellido()."</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="" class="form-label">Libro</label><span class="error">* <?php echo $idLibroError;?></span>
+                  <select class="form-select" aria-label="" name="libro">
+                  <option value="0">Seleccionar libro</option>
+                    <?php
+                    $libros = getLibros();
+                    foreach ($libros as $libro) {
+                      echo "<option value='".$libro->getId()."'>".$libro->getTitulo()." </option>";
                     }
                     ?>
                   </select>

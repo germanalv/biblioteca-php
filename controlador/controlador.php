@@ -3,6 +3,7 @@ session_start();
 require '../db/connDB.php';
 include ('../modelos/clslibro.php');
 include ('../modelos/clsusuario.php');
+include ('../modelos/clsprestamo.php');
 
 
 function test_input($data) {
@@ -18,14 +19,14 @@ function test_input($data) {
 /*********************************************************/
 
 function addLibro($objLibro){
-    // var_dump($objLibro);
+    var_dump($objLibro);
     
     try {
         $conn =  connDB();
         $sql = "INSERT INTO libros (titulo, autor, genero, anio, cant_ejemplares) 
                 VALUES('".$objLibro->getTitulo()."', '".$objLibro->getAutor()."', '".$objLibro->getGenero()."', 
                 ".$objLibro->getAnio().", ".$objLibro->getCantEjemplares().")";
-        //echo $sql;
+        echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
 
@@ -43,7 +44,7 @@ function addLibro($objLibro){
 
     } catch (Exception $e) {
         $respuesta['estado'] = 0;
-        $respuesta['resp'] = "No se pudo ingresar el usuario<br>ERROR: ".$e->getMessage();
+        $respuesta['resp'] = "No se pudo ingresar el Libro<br>ERROR: ".$e->getMessage();
         return $respuesta;
     }
 }
@@ -67,6 +68,56 @@ function getLibros(){
     }
     
 }
+
+function getLibro($idLibro){
+
+    try {
+        $conn =  connDB();
+        $sql = "SELECT * FROM libros WHERE id = ".$idLibro;
+        $resultado = $conn->query($sql);
+        $fila = $resultado->fetch_assoc();
+        //var_dump($fila);
+        $conn->close();
+        if( !empty($fila) ) { 
+            $libro = new Libro($fila['id'], $fila['titulo'], $fila['autor'], $fila['genero'], $fila['anio'], $fila['cant_ejemplares']);
+            return $libro;
+        } else { 
+            return NULL;
+        }
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+    
+}
+
+function setLibro($libro){
+    try {
+        $conn =  connDB();
+        $sql = "UPDATE libros SET titulo = '".$libro->getTitulo()."', nombre = '".$libro->getAutor()."', apellido = '".$libro->getGenero()."', mail = '".$libro->getAnio()."', tel = '".$libro->getCantEjemplares()."' WHERE id = ".$libro->getId();
+
+        if ($conn->query($sql) === TRUE) {
+            $id = $conn->insert_id;
+
+            $respuesta['estado'] = 1;
+            $respuesta['resp'] = 'OK';
+
+            $conn->close();
+            return $respuesta;
+        }else{  
+            $conn->close();
+            $respuesta['estado'] = 0;
+            $respuesta['resp'] = "No se pudo actualizar el libro";
+            return $respuesta;
+        }
+             
+    } catch (Exception $e) {
+        $respuesta['estado'] = 0;
+        $respuesta['resp'] = "No se pudo actualizar el libro<br>ERROR: ".$e->getMessage();
+        return $respuesta;
+    }
+}
+
+
 
 /***********************************************************/
 /******************* Funciones Usuarios ********************/
@@ -242,5 +293,67 @@ function addUsuario($objUsuario){
 /***********************************************************/
 /******************* Funciones Prestamos *******************/
 /***********************************************************/
+
+function getPrestamos(){
+
+    try {
+        $conn =  connDB();
+        $sql = "SELECT * FROM prestamo";
+        $resultado = $conn->query($sql);
+        
+        $listaPrestamos = array();
+
+        while ($fila = $resultado->fetch_assoc()) {
+            $prestamo = new Prestamo ($fila['id'], $fila['id_libro'], $fila['id_usuario'], $fila['fecha_prestamo'], $fila['fecha_devolución'], $fila['estado']);
+            $listaPrestamos[] = $prestamo;
+        }
+
+        $conn->close();
+        return $listaPrestamos;
+
+        
+    } catch (Exception $e) {
+        return 'Error: '.  $e->getMessage(). "\n";
+    }
+    
+}
+
+function addPrestamo($objPrestamo){
+    //var_dump($objPrestamo);
+    $respuesta = [];
+    $fecha_actual = date("d-m-Y");
+    $fecha_devolucion = strtotime($fecha_actual);
+    $fecha_devolucion = strtotime("+7 day", $fecha_devolucion);
+    try {
+        $conn =  connDB();
+        $sql = "INSERT INTO prestamo (id_libro, id_usuario, fecha_prestamo, fecha_devolución, estado) 
+                VALUES('".$objPrestamo->getIdLibro()."', '".$objPrestamo->getIdUsuario()."', '$fecha_actual', 
+                '".$fecha_devolucion."', '1')";
+        //echo $sql;
+        if ($conn->query($sql) === TRUE) {
+            $id = $conn->insert_id;
+
+            $respuesta['estado'] = 1;
+            $respuesta['resp'] = $id;
+
+            $conn->close();
+            return $respuesta;
+        }else{  
+            $conn->close();
+            $respuesta['estado'] = 0;
+            $respuesta['resp'] = "No se pudo ingresar el préstamo";
+            return $respuesta;
+        }
+
+    } catch (Exception $e) {
+        $respuesta['estado'] = 0;
+        $respuesta['resp'] = "No se pudo ingresar el préstamo<br>ERROR: ".$e->getMessage();
+        return $respuesta;
+    }
+}
+
+
+
+
 
 ?>
