@@ -1,6 +1,6 @@
 <?php
 
-//require('../general/vizualizar_errores.php');
+require('../general/vizualizar_errores.php');
 
 require('../controlador/controlador.php');
 checkLogin();
