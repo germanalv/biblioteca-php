@@ -289,6 +289,21 @@ function addUsuario($objUsuario){
     }
 }
 
+function eliminarUsuario($id){
+    try {
+        $conn =  connDB();
+        $sql = "DELETE FROM usuarios WHERE id = ".$id;
+
+        if ($conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+}
+
 
 /***********************************************************/
 /******************* Funciones Prestamos *******************/
@@ -320,6 +335,7 @@ function getPrestamos(){
 
 function addPrestamo($objPrestamo){
     //var_dump($objPrestamo);
+    //Estado 1 es prestado
     $respuesta = [];
     $fecha_actual = date("d-m-Y");
     $fecha_devolucion = strtotime($fecha_actual);

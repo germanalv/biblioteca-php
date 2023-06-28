@@ -13,11 +13,9 @@ $nuevo_usuario = "";
 
 /* Obtengo los datos del usuario a editar 
 ********************************************/
-$idUsuario = $_GET['id'];
-if (!empty($idUsuario)) {
-  $usuario = getUsuario($idUsuario);
-  var_dump($usuario);
-  
+if(!empty($_GET['id'])){
+  $usuario = getUsuario($_GET['id']);
+  //var_dump($usuario);
 }
 
 
@@ -89,7 +87,8 @@ if(isset($_POST['submit'])){
 
     }else{
       // Modificar usuario
-      $nuevo_usuario = new Usuario ($idUsuario, $ci, $nombre, $apellido, $mail, $tel, $dir);
+      $nuevo_usuario = new Usuario ($_POST['id'], $ci, $nombre, $apellido, $mail, $tel, $dir);
+
       $respuesta = setUsuario($nuevo_usuario);
 
       if (!empty($respuesta)) {
@@ -165,6 +164,8 @@ if(isset($_POST['submit'])){
                   <label for="" class="form-label">Dirección</label><span class="error">* <?php echo $dirError;?></span>
                   <input type="text" class="form-control" name="dir" value="<?=$usuario->getDir()?>">
                 </div>
+
+                <input type="hidden" class="form-control" name="id" value="<?=$usuario->getId()?>">
 
                 <button type="submit" class="btn btn-primary" name="submit">Modificar Usuario</button>
               </form>
