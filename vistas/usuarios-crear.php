@@ -50,7 +50,18 @@ if(isset($_POST['submit'])){
       $mailError = "Inserte el mail del usuario";
     }elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
       $mailError = "Formato de email inválido";
+    }elseif ( empty( getUsuarioByMail($mail) ) ) {
+      $mailError = "El mail ya existe";
     }
+    
+    /* $usu = getUsuarioByMail($mail);
+    if ( empty( $usu ) ) {
+      $mailError = "El mail ya existe";
+    } */
+    
+
+    /* Validar que no existe el mail en la BD */
+
 
     /* Validación Telefono
     **************************/

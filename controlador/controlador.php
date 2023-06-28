@@ -222,9 +222,9 @@ function checkLogin(){
 }
 
 function logout(){
-    echo "Paso 3";
+    //echo "Paso 3";
     session_destroy();
-    echo "Paso 4";
+    //echo "Paso 4";
     header("Location: login.php");
 }
 
