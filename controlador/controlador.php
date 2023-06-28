@@ -5,6 +5,7 @@ include ('../modelos/clslibro.php');
 include ('../modelos/clsusuario.php');
 include ('../modelos/clsprestamo.php');
 
+require('../general/vizualizar_errores.php');
 
 function test_input($data) {
     $data = trim($data);
@@ -311,18 +312,27 @@ function addUsuario($objUsuario){
     }
 }
 
+//eliminarUsuario(1);
 function eliminarUsuario($id){
     try {
         $conn =  connDB();
         $sql = "DELETE FROM usuarios WHERE id = ".$id;
-
+        
+        $conn->query($sql);
+        
+        
         if ($conn->query($sql) === TRUE) {
-            return true;
+            return "OK";
         } else {
-            return false;
-        }
+            return "No fue posible eliminae el usuario";
+        } 
+        
     } catch (Exception $e) {
-        return $e->getMessage();
+        if($e->getCode() == 1451){
+            return "No fue posible eliminar el usuario: El usuario tiene prestamos asociados"; 
+        }else{
+            return $e->getMessage();
+        }
     }
 }
 

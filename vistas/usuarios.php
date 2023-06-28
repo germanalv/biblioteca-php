@@ -32,6 +32,11 @@ $sidebar_op = 3; /* Marco como activo el menu "Usuarios" */
               </div>
             </div>
             <div class="row">
+              <?php if( !empty( $_GET['r'] ) ) { ?>
+                <div class="alert alert-danger" role="alert my-2"><?=test_input($_GET['r'])?></div>
+              <?php } ?>
+            </div>
+            <div class="row">
               
               <table class="table table-striped table-bordered">
                 <thead>
@@ -73,17 +78,47 @@ $sidebar_op = 3; /* Marco como activo el menu "Usuarios" */
                             </a>
                           </div>
                           <div class="col-3" >
-                            <form method="post" action="usuarios-eliminar.php">
-                              <input type="hidden" class="form-control" name="id" value="<?=$usuario->getId()?>">
-                              <button class="btn btn-danger btn-sm pb-2" type="submit" name="btnEliminar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <button type="button" class="btn btn-danger btn-sm pb-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
                                 <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
-                                </svg>
-                              </button>
-                            </form>
+                              </svg>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                  <div class="modal-header">
+                                    <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminar Usuario</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+
+                                  <div class="modal-body">
+                                    Confirma que desea eliminar el usuario <?=$usuario->getNombre()?> <?=$usuario->getApellido()?>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                    <form method="post" action="usuarios-eliminar.php">
+                                      <input type="hidden" class="form-control" id="id" name="id" value="<?=$usuario->getId()?>">
+                                      <!-- <input class="btn btn-danger btnEliminarJ" name="btnEliminar" id="btnEliminar" value="Eliminar"/> -->
+                                      <button class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+
                           </div>
                         </div>
+
+                        
+
+
                       </td>
                       
                     </tr>
@@ -103,5 +138,17 @@ $sidebar_op = 3; /* Marco como activo el menu "Usuarios" */
 
   <!-- Menu de Pefil de usuario -->
   <?php include '../layout/footer.php';?>
+  <script type="">
+    /* const data = {
+      id : $('#id').val(),
+      btnEliminar : "OK",
+
+
+    } */
+    /* $('.btnEliminarJ').click(function(){
+      console.log("Hola");
+      
+    }) */
+  </script>
 </body>
 </html>
