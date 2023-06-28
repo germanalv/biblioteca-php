@@ -33,11 +33,17 @@ switch ($sidebar_op) {
               Libros
           </a>
         </li>
+        <?php
+        if ($_SESSION['rol'] == "1") {
+        ?>
         <li>
           <a href="usuarios.php" class="nav-link <?=$usuarios_opc?>">
               Usuarios
           </a>
         </li>
+        <?php
+        }
+        ?>
       </ul>
 
 

@@ -57,15 +57,6 @@ if(isset($_POST['submit'])){
       $anioError = "Solo se permiten números";
     }
 
-    /* Validación Cantidad de Ejemplares
-    **************************/
-    $CantEjemplares = test_input($_POST["CantEjemplares"]); 
-    if (empty($CantEjemplares)) {
-      $CantEjemplaresError = "Inserte el año del libro";
-    }elseif (!preg_match("/^[0-9]*$/",$CantEjemplares)) {
-      $CantEjemplaresError = "Solo se permiten números";
-    }
-
     if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 
         (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) ){
 
@@ -73,14 +64,14 @@ if(isset($_POST['submit'])){
 
     }else{
       // Modificar usuario
-      $nuevo_usuario = new Usuario ($idUsuario, $ci, $nombre, $apellido, $mail, $tel, $dir);
+     /*  $nuevo_usuario = new Usuario ($idUsuario, $ci, $nombre, $apellido, $mail, $tel, $dir);
       $respuesta = setUsuario($nuevo_usuario);
 
       if (!empty($respuesta)) {
         if($respuesta['estado'] == 1){
           header("Location: usuarios.php?idusu=".$respuesta['resp']);
         }
-      }
+      } */
 
     }
 

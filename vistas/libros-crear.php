@@ -7,7 +7,7 @@ checkLogin();
 
 // Seteo e inicializo variables vacias.
 $titulo = $autor = $anio = $genero = $CantEjemplares = "";
-$tituloError = $autorError = $anioError = $generoError = $CantEjemplaresError = "";
+$tituloError = $autorError = $anioError = $generoError = "";
 
 if(isset($_POST['submit'])){
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -46,17 +46,8 @@ if(isset($_POST['submit'])){
       $anioError = "Solo se permiten números";
     }
 
-    /* Validación Cantidad de Ejemplares
-    **************************/
-    $CantEjemplares = test_input($_POST["CantEjemplares"]); 
-    if (empty($CantEjemplares)) {
-      $CantEjemplaresError = "Inserte el año del libro";
-    }elseif (!preg_match("/^[0-9]*$/",$CantEjemplares)) {
-      $CantEjemplaresError = "Solo se permiten números";
-    }
-
     if( (!empty($tituloError)) || (!empty($autorError)) || (!empty($generoError)) || 
-      (!empty($anioError)) || (!empty($CantEjemplaresError)) ){
+      (!empty($anioError)) ){
 
 
 

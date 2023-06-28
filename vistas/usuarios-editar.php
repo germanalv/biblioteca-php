@@ -1,12 +1,13 @@
 <?php
-//require('../general/vizualizar_errores.php');
+require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 checkLogin();
+checkRolAdmin();
 $sidebar_op = 3; /* Maco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
-$ci = $nombre = $apellido = $mail = $tel = $dir = "";
-$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = "";
+$ci = $nombre = $apellido = $mail = $tel = $dir = $rol = "";
+$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = $rolError = "";
 $respuesta = "";
 $nuevo_usuario = "";
 
@@ -15,6 +16,13 @@ $nuevo_usuario = "";
 ********************************************/
 if(!empty($_GET['id'])){
   $usuario = getUsuario($_GET['id']);
+  $ci = $usuario->getCi();
+  $nombre = $usuario->getNombre();
+  $apellido = $usuario->getApellido();
+  $mail = $usuario->getMail();
+  $tel = $usuario->getTel();
+  $dir = $usuario->getDir();
+  $rol = $usuario->getRol();
   //var_dump($usuario);
 }
 
@@ -22,9 +30,6 @@ if(!empty($_GET['id'])){
 if(isset($_POST['submit'])){  
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-
-
 
     /* Validación Cedula 
     **************************/
@@ -60,7 +65,9 @@ if(isset($_POST['submit'])){
       $mailError = "Inserte el mail del usuario";
     }elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
       $mailError = "Formato de email inválido";
-    }
+    }/* elseif ( !empty( getUsuarioByMail($mail) ) ) {
+      $mailError = "El mail ya existe";
+    } El control de quevalida si el correo ya existe se comenta porque se assume que el correo existe por que se esta editando el usuario*/ 
 
     /* Validación Telefono
     **************************/
@@ -80,14 +87,20 @@ if(isset($_POST['submit'])){
       $dirError = "Solo se permiten letras, números y espacios en blanco";
     }
 
+    /* Validación Rol
+    **************************/
+    $rol = test_input($_POST["rol"]); 
+    if ($rol == "0") {
+      $telError = "Debe seleccionar un rol";
+    }
+
+
     if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 
-        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) ){
-
-          
-
+        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) || (!empty($rolError)) ){
+          echo "Aca no!";
     }else{
       // Modificar usuario
-      $nuevo_usuario = new Usuario ($_POST['id'], $ci, $nombre, $apellido, $mail, $tel, $dir);
+      $nuevo_usuario = new Usuario ($_POST['id'], $ci, $nombre, $apellido, $mail, $tel, $dir, $rol);
 
       $respuesta = setUsuario($nuevo_usuario);
 
@@ -142,27 +155,35 @@ if(isset($_POST['submit'])){
 
                 <div class="mb-3">
                   <label for="" class="form-label">CI</label><span class="error">* <?php echo $ciError;?></span>
-                  <input type="text" class="form-control" name="ci" value="<?=$usuario->getCi()?>">
+                  <input type="text" class="form-control" name="ci" value="<?=$ci?>">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Nombre</label><span class="error">* <?php echo $nombreError;?></span>
-                  <input type="text" class="form-control" name="nombre" value="<?=$usuario->getNombre()?>">
+                  <input type="text" class="form-control" name="nombre" value="<?=$nombre?>">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Apellido</label><span class="error">* <?php echo $apellidoError;?></span>
-                  <input type="text" class="form-control" name="apellido" value="<?=$usuario->getApellido()?>">
+                  <input type="text" class="form-control" name="apellido" value="<?=$apellido?>">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Email</label><span class="error">* <?php echo $mailError;?></span>
-                  <input type="text" class="form-control" name="mail" value="<?=$usuario->getMail()?>">
+                  <input type="text" class="form-control" name="mail" value="<?=$mail?>">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Teléfono</label><span class="error">* <?php echo $telError;?></span>
-                  <input type="text" class="form-control" name="tel" value="<?=$usuario->getTel()?>">
+                  <input type="text" class="form-control" name="tel" value="<?=$tel?>">
                 </div>
                 <div class="mb-3">
                   <label for="" class="form-label">Dirección</label><span class="error">* <?php echo $dirError;?></span>
-                  <input type="text" class="form-control" name="dir" value="<?=$usuario->getDir()?>">
+                  <input type="text" class="form-control" name="dir" value="<?=$dir?>">
+                </div>
+                <div class="mb-3">
+                  <label for="" class="form-label">Rol</label><span class="error">* <?php echo $rolError;?></span>
+                  <select class="form-select" aria-label="" name="rol">
+                    <option value="0">Seleccionar Genero</option>
+                    <option value="1" <?php if ($rol == 1) echo "selected";?> >Administrador</option>
+                    <option value="2" <?php if ($rol == 2) echo "selected";?>>General</option>
+                  </select>
                 </div>
 
                 <input type="hidden" class="form-control" name="id" value="<?=$usuario->getId()?>">

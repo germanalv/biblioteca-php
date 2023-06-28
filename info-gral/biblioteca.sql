@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 27-06-2023 a las 18:56:07
+-- Tiempo de generación: 28-06-2023 a las 14:46:53
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -32,48 +32,47 @@ CREATE TABLE `libros` (
   `titulo` varchar(255) DEFAULT NULL,
   `autor` varchar(255) DEFAULT NULL,
   `genero` varchar(255) DEFAULT NULL,
-  `anio` int(11) DEFAULT NULL,
-  `cant_ejemplares` int(11) DEFAULT NULL
+  `anio` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `libros`
 --
 
-INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `anio`, `cant_ejemplares`) VALUES
-(1, 'Rev', 'Corabel Baglin', 'non-fiction', 1992, 9),
-(2, 'Rev', 'Griffie Goodie', 'fiction', 2010, 3),
-(3, 'Honorable', 'Neilla Valadez', 'biography', 2002, 3),
-(4, 'Ms', 'Micheil Zorzoni', 'biography', 2004, 8),
-(5, 'Ms', 'Sumner Pastor', 'non-fiction', 2002, 2),
-(6, 'Mr', 'Barney Maughan', 'biography', 2007, 5),
-(7, 'Mrs', 'Nickola Cowderay', 'non-fiction', 2011, 2),
-(8, 'Dr', 'Gracie Ommanney', 'fiction', 2002, 6),
-(9, 'Rev', 'Morna Deport', 'biography', 1984, 3),
-(10, 'Mrs', 'Denice McCloid', 'fiction', 2008, 8),
-(11, 'Mrs', 'Annabel Luto', 'fiction', 2007, 3),
-(12, 'Ms', 'Jerrome Boothby', 'biography', 2010, 6),
-(13, 'Ms', 'Brannon Wotton', 'biography', 1995, 7),
-(14, 'Honorable', 'Desiree Kopfer', 'non-fiction', 2008, 3),
-(15, 'Honorable', 'Kipp Shilling', 'fiction', 1996, 2),
-(16, 'Rev', 'Candy Leuty', 'fiction', 2003, 7),
-(17, 'Honorable', 'Cele Panther', 'biography', 1996, 8),
-(18, 'Mr', 'Horst Hing', 'fiction', 1998, 1),
-(19, 'Dr', 'Jenna Loynton', 'non-fiction', 2001, 2),
-(20, 'Honorable', 'Emilie Smaling', 'biography', 2011, 7),
-(21, 'Rev', 'Prinz Brumen', 'fiction', 2006, 9),
-(22, 'Mrs', 'Shanan Blenkensop', 'non-fiction', 1994, 3),
-(23, 'Mr', 'Sonnie Black', 'biography', 2011, 8),
-(24, 'Dr', 'Maiga Rennolds', 'non-fiction', 1992, 4),
-(25, 'Dr', 'Emilie Spurdens', 'biography', 2001, 5),
-(26, 'Mrs', 'Hobie Irnis', 'non-fiction', 1993, 5),
-(27, 'Honorable', 'Bondie Prinnett', 'biography', 1986, 7),
-(28, 'Rev', 'Alastair Gaffney', 'fiction', 2006, 4),
-(29, 'Mr', 'Myca Kilby', 'non-fiction', 1985, 9),
-(30, 'Rev', 'Regan Roney', 'fiction', 2006, 5),
-(101, 'Libro 1', 'Carlos', 'Comedia', 2007, 5),
-(102, 'Libro 1', 'Carlos', 'Comedia', 2007, 5),
-(103, 'Libro 1', 'Carlos', 'Comedia', 2007, 5);
+INSERT INTO `libros` (`id`, `titulo`, `autor`, `genero`, `anio`) VALUES
+(1, 'Rev', 'Corabel Baglin', 'non-fiction', 1992),
+(2, 'Rev', 'Griffie Goodie', 'fiction', 2010),
+(3, 'Honorable', 'Neilla Valadez', 'biography', 2002),
+(4, 'Ms', 'Micheil Zorzoni', 'biography', 2004),
+(5, 'Ms', 'Sumner Pastor', 'non-fiction', 2002),
+(6, 'Mr', 'Barney Maughan', 'biography', 2007),
+(7, 'Mrs', 'Nickola Cowderay', 'non-fiction', 2011),
+(8, 'Dr', 'Gracie Ommanney', 'fiction', 2002),
+(9, 'Rev', 'Morna Deport', 'biography', 1984),
+(10, 'Mrs', 'Denice McCloid', 'fiction', 2008),
+(11, 'Mrs', 'Annabel Luto', 'fiction', 2007),
+(12, 'Ms', 'Jerrome Boothby', 'biography', 2010),
+(13, 'Ms', 'Brannon Wotton', 'biography', 1995),
+(14, 'Honorable', 'Desiree Kopfer', 'non-fiction', 2008),
+(15, 'Honorable', 'Kipp Shilling', 'fiction', 1996),
+(16, 'Rev', 'Candy Leuty', 'fiction', 2003),
+(17, 'Honorable', 'Cele Panther', 'biography', 1996),
+(18, 'Mr', 'Horst Hing', 'fiction', 1998),
+(19, 'Dr', 'Jenna Loynton', 'non-fiction', 2001),
+(20, 'Honorable', 'Emilie Smaling', 'biography', 2011),
+(21, 'Rev', 'Prinz Brumen', 'fiction', 2006),
+(22, 'Mrs', 'Shanan Blenkensop', 'non-fiction', 1994),
+(23, 'Mr', 'Sonnie Black', 'biography', 2011),
+(24, 'Dr', 'Maiga Rennolds', 'non-fiction', 1992),
+(25, 'Dr', 'Emilie Spurdens', 'biography', 2001),
+(26, 'Mrs', 'Hobie Irnis', 'non-fiction', 1993),
+(27, 'Honorable', 'Bondie Prinnett', 'biography', 1986),
+(28, 'Rev', 'Alastair Gaffney', 'fiction', 2006),
+(29, 'Mr', 'Myca Kilby', 'non-fiction', 1985),
+(30, 'Rev', 'Regan Roney', 'fiction', 2006),
+(101, 'Libro 1', 'Carlos', 'Comedia', 2007),
+(102, 'Libro 1', 'Carlos', 'Comedia', 2007),
+(103, 'Libro 1', 'Carlos', 'Comedia', 2007);
 
 -- --------------------------------------------------------
 
@@ -90,6 +89,13 @@ CREATE TABLE `prestamo` (
   `estado` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `prestamo`
+--
+
+INSERT INTO `prestamo` (`id`, `id_libro`, `id_usuario`, `fecha_prestamo`, `fecha_devolución`, `estado`) VALUES
+(1, 3, 1, '2023-06-27', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -104,17 +110,18 @@ CREATE TABLE `usuarios` (
   `mail` varchar(255) DEFAULT NULL,
   `tel` varchar(255) DEFAULT NULL,
   `dir` varchar(255) DEFAULT NULL,
-  `password` varchar(300) DEFAULT NULL
+  `password` varchar(300) DEFAULT NULL,
+  `rol` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `ci`, `nombre`, `apellido`, `mail`, `tel`, `dir`, `password`) VALUES
-(1, '55555555', 'German', 'Alvarez', 'german@mail.com', '1234567', 'direccion', '123456'),
-(2, '123132', 'pepe', 'loco', 'mail@mail.com', '09809809', 'direccion', '123456'),
-(3, '72727272', 'Richard', 'Ferreira', 'richard@mail.com', '1234512', 'Direccion Richard', '123456');
+INSERT INTO `usuarios` (`id`, `ci`, `nombre`, `apellido`, `mail`, `tel`, `dir`, `password`, `rol`) VALUES
+(1, '55555555', 'German', 'Alvarez', 'german@mail.com', '1234567', 'direccion', '123456', NULL),
+(2, '123132', 'pepe', 'loco', 'mail@mail.com', '09809809', 'direccion', '123456', NULL),
+(3, '72727272', 'Richard', 'Ferreira', 'richard@mail.com', '1234512', 'Direccion Richard', '123456', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -154,7 +161,7 @@ ALTER TABLE `libros`
 -- AUTO_INCREMENT de la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

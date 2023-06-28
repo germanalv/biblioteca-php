@@ -2,11 +2,12 @@
 //require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 checkLogin();
+checkRolAdmin();
 $sidebar_op = 3; /* Maco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
-$ci = $nombre = $apellido = $mail = $tel = $dir = "";
-$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = "";
+$ci = $nombre = $apellido = $mail = $tel = $dir = $rol = "";
+$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = $rolError = "";
 $respuesta = "";
 $nuevo_usuario = "";
 
@@ -46,11 +47,12 @@ if(isset($_POST['submit'])){
     /* Validación Mail
     **************************/
     $mail = test_input($_POST["mail"]);
+    //$usu = getUsuarioByMail($mail);
     if (empty($mail)) {
       $mailError = "Inserte el mail del usuario";
     }elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
       $mailError = "Formato de email inválido";
-    }elseif ( empty( getUsuarioByMail($mail) ) ) {
+    }elseif ( !empty( getUsuarioByMail($mail) ) ) {
       $mailError = "El mail ya existe";
     }
     
@@ -58,10 +60,6 @@ if(isset($_POST['submit'])){
     if ( empty( $usu ) ) {
       $mailError = "El mail ya existe";
     } */
-    
-
-    /* Validar que no existe el mail en la BD */
-
 
     /* Validación Telefono
     **************************/
@@ -81,14 +79,21 @@ if(isset($_POST['submit'])){
       $dirError = "Solo se permiten letras, números y espacios en blanco";
     }
 
+    /* Validación Rol
+    **************************/
+    $rol = test_input($_POST["rol"]); 
+    if ($rol == "0") {
+      $telError = "Debe seleccionar un rol";
+    }
+
     if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 
-        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) ){
+        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) || (!empty($rolError)) ){
 
           
 
     }else{
       // Grabar usuario
-      $nuevo_usuario = new Usuario (0, $ci, $nombre, $apellido, $mail, $tel, $dir);
+      $nuevo_usuario = new Usuario (0, $ci, $nombre, $apellido, $mail, $tel, $dir, $rol);
       $respuesta = addUsuario($nuevo_usuario);
 
       if (!empty($respuesta)) {
@@ -159,6 +164,14 @@ if(isset($_POST['submit'])){
                 <div class="mb-3">
                   <label for="" class="form-label">Dirección</label><span class="error">* <?php echo $dirError;?></span>
                   <input type="text" class="form-control" name="dir">
+                </div>
+                <div class="mb-3">
+                  <label for="" class="form-label">Rol</label><span class="error">* <?php echo $generoRol;?></span>
+                  <select class="form-select" aria-label="" name="rol">
+                    <option value="0">Seleccionar Genero</option>
+                    <option value="1">Administrador</option>
+                    <option value="2">General</option>
+                  </select>
                 </div>
 
                 <button type="submit" class="btn btn-primary" name="submit">Guardar Usuario</button>

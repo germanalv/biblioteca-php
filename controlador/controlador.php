@@ -23,9 +23,9 @@ function addLibro($objLibro){
     
     try {
         $conn =  connDB();
-        $sql = "INSERT INTO libros (titulo, autor, genero, anio, cant_ejemplares) 
+        $sql = "INSERT INTO libros (titulo, autor, genero, anio) 
                 VALUES('".$objLibro->getTitulo()."', '".$objLibro->getAutor()."', '".$objLibro->getGenero()."', 
-                ".$objLibro->getAnio().", ".$objLibro->getCantEjemplares().")";
+                ".$objLibro->getAnio().")";
         echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
@@ -58,7 +58,7 @@ function getLibros(){
         $resultado = $conn->query($sql);
         $listaLibros = array();
         while ($fila = $resultado->fetch_assoc()) {
-            $libro = new Libro($fila['id'], $fila['titulo'], $fila['autor'], $fila['genero'], $fila['anio'], $fila['cant_ejemplares']);
+            $libro = new Libro($fila['id'], $fila['titulo'], $fila['autor'], $fila['genero'], $fila['anio']);
             $listaLibros[] = $libro;
         }
         $conn->close();
@@ -79,7 +79,7 @@ function getLibro($idLibro){
         //var_dump($fila);
         $conn->close();
         if( !empty($fila) ) { 
-            $libro = new Libro($fila['id'], $fila['titulo'], $fila['autor'], $fila['genero'], $fila['anio'], $fila['cant_ejemplares']);
+            $libro = new Libro($fila['id'], $fila['titulo'], $fila['autor'], $fila['genero'], $fila['anio']);
             return $libro;
         } else { 
             return NULL;
@@ -89,6 +89,8 @@ function getLibro($idLibro){
     }
     
 }
+
+
 
 function setLibro($libro){
     try {
@@ -133,7 +135,7 @@ function getUsuarios(){
         $listaUsuarios = array();
 
         while ($fila = $resultado->fetch_assoc()) {
-            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol']);
             $listaUsuarios[] = $usuario;
         }
 
@@ -158,7 +160,7 @@ function getUsuario($id){
         //var_dump($fila);
         $conn->close();
         if( !empty($fila) ) { 
-            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol']);
             return $usuario;
         } else { 
             return NULL;
@@ -182,7 +184,7 @@ function getUsuarioByMail($mail){
         $fila = $resultado->fetch_assoc();
         $conn->close();
         if( !empty($fila) ) { 
-            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir']);
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol']);
             return $usuario;
         } else { 
             return NULL;
@@ -206,12 +208,19 @@ function login($mail, $pass){
             $_SESSION["nombre"] = $usu->getNombre();
             $_SESSION["apellido"] = $usu->getApellido();
             $_SESSION["mail"] = $usu->getMail();
+            $_SESSION["rol"] = $usu->getRol();
             return true;
         } else { 
             return false;
         }
     } catch (Exception $e) {
         return $e->getMessage();
+    }
+}
+
+function checkRolAdmin(){
+    if ( $_SESSION['rol'] != "1" ) {
+        header("Location: index.php");
     }
 }
 
@@ -232,13 +241,13 @@ function logout(){
 function setUsuario($usuario){
     try {
         $conn =  connDB();
-        $sql = "UPDATE usuarios SET ci = '".$usuario->getCi()."', nombre = '".$usuario->getNombre()."', apellido = '".$usuario->getApellido()."', mail = '".$usuario->getMail()."', tel = '".$usuario->getTel()."', dir = '".$usuario->getDir()."' WHERE id = ".$usuario->getId();
+        $sql = "UPDATE usuarios SET ci = '".$usuario->getCi()."', nombre = '".$usuario->getNombre()."', apellido = '".$usuario->getApellido()."', mail = '".$usuario->getMail()."', tel = '".$usuario->getTel()."', dir = '".$usuario->getDir()."', rol = ".$usuario->getRol()." WHERE id = ".$usuario->getId();
 
         if ($conn->query($sql) === TRUE) {
-            $id = $conn->insert_id;
+            $rows = $conn->affected_rows;
 
             $respuesta['estado'] = 1;
-            $respuesta['resp'] = 'OK';
+            $respuesta['resp'] = $rows;
 
             $conn->close();
             return $respuesta;
@@ -263,9 +272,9 @@ function addUsuario($objUsuario){
     $respuesta = [];
     try {
         $conn =  connDB();
-        $sql = "INSERT INTO usuarios (ci, nombre, apellido, mail, tel, dir, password) 
+        $sql = "INSERT INTO usuarios (ci, nombre, apellido, mail, tel, dir, password, rol) 
                 VALUES('".$objUsuario->getCi()."', '".$objUsuario->getNombre()."', '".$objUsuario->getApellido()."', 
-                '".$objUsuario->getMail()."', '".$objUsuario->getTel()."', '".$objUsuario->getDir()."', '123456')";
+                '".$objUsuario->getMail()."', '".$objUsuario->getTel()."', '".$objUsuario->getDir()."', '123456', ".$objUsuario->getRol().")";
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;

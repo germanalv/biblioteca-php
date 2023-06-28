@@ -41,7 +41,6 @@ $sidebar_op = 2; /* Marco como activo el menu "Libros" */
                     <th scope="col">Autor</th>
                     <th scope="col">Genero</th>
                     <th scope="col">Año</th>
-                    <th scope="col">Disponibles</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -57,7 +56,6 @@ $sidebar_op = 2; /* Marco como activo el menu "Libros" */
                       <td><?=$libro->getAutor()?></td>
                       <td><?=$libro->getGenero()?></td>
                       <td><?=$libro->getAnio()?></td>
-                      <td><?=$libro->getCantEjemplares()?></td>
                       <td>
                           <button class="btn btn-warning btn-sm pb-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">

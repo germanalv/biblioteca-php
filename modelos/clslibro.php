@@ -9,18 +9,16 @@ class Libro{
     private $autor;
     private $genero;
     private $anio;
-    private $cant_ejemplares ;
 
     /**
      * Class constructor.
      */
-    public function __construct($pId, $pTitulo, $pAutor, $pGenero, $pAnio, $pCant_ejemplares){
+    public function __construct($pId, $pTitulo, $pAutor, $pGenero, $pAnio){
         $this->id = $pId;
         $this->titulo = $pTitulo;
         $this->autor = $pAutor;
         $this->genero = $pGenero;
         $this->anio = $pAnio;
-        $this->cant_ejemplares = $pCant_ejemplares;
     }
 
     /**********
@@ -41,9 +39,6 @@ class Libro{
     public function getAnio(){
         return $this->anio;
     }
-    public function getCantEjemplares(){
-        return $this->cant_ejemplares;
-    }
     
     /**********
      * Setters.
@@ -60,9 +55,6 @@ class Libro{
     }
     public function setAnio($pAnio){
         $this->anio = $pAnio;
-    }
-    public function setCantEjemplares($pCantEjemplares){
-        $this->cant_ejemplares = $pCantEjemplares;
     }
 
 }
