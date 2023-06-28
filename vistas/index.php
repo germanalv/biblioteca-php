@@ -42,38 +42,6 @@ checkLogin();
                   </tr>
                 </thead>
                 <tbody>
-                  <!--
-                  <tr>
-                    <td>Harry Potter</td>
-                    <td>Juan Carlos</td>
-                    <td>23/06/23</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm mb-2">
-                          Devolución
-                        </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>El Principito</td>
-                    <td>Pedro</td>
-                    <td>15/05/23</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm mb-2">
-                          Devolución
-                        </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>El Quijote</td>
-                    <td>Alberto</td>
-                    <td>07/06/23</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm mb-2">
-                          Devolución
-                        </button>
-                    </td>
-                  </tr>
-                  -->
                 <?php
                 $prestamos = getPrestamos();
                 // var_dump($usuarios);

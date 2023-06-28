@@ -3,7 +3,7 @@ require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 checkLogin();
 checkRolAdmin();
-$sidebar_op = 3; /* Maco como activo el menu "Libros" */
+$sidebar_op = 3; /* Marco como activo el menu "Usuarios" */
 
 // Seteo e inicializo variables vacias.
 $ci = $nombre = $apellido = $mail = $tel = $dir = $rol = "";
@@ -180,7 +180,7 @@ if(isset($_POST['submit'])){
                 <div class="mb-3">
                   <label for="" class="form-label">Rol</label><span class="error">* <?php echo $rolError;?></span>
                   <select class="form-select" aria-label="" name="rol">
-                    <option value="0">Seleccionar Genero</option>
+                    <option value="0">Seleccionar Género</option>
                     <option value="1" <?php if ($rol == 1) echo "selected";?> >Administrador</option>
                     <option value="2" <?php if ($rol == 2) echo "selected";?>>General</option>
                   </select>

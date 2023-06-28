@@ -1,22 +1,25 @@
 <?php
 require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-$sidebar_op = 3; /* Marco como activo el menu "Libros" */
+checkLogin();
+checkRolAdmin();
+$sidebar_op = 2; /* Marco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
-$titulo = $autor = $anio = $genero = $CantEjemplares = "";
-$tituloError = $autorError = $anioError = $generoError = $CantEjemplaresError = "";
+$titulo = $autor = $anio = $genero = "";
+$tituloError = $autorError = $anioError = $generoError = "";
 $respuesta = "";
 $nuevo_libro = "";
 
-
 /* Obtengo los datos del libro a editar 
 ********************************************/
-$idLibro = $_GET['id'];
-if (!empty($idLibro)) {
-  $libro = getLibro($idLibro);
-  var_dump($libro);
-  
+if(!empty($_GET['id'])){
+  $libro = getLibro($_GET['id']);
+  $titulo = $libro->getTitulo();
+  $autor = $libro->getAutor();
+  $genero = $libro->getGenero();
+  $anio = $libro->getAnio();
+  //var_dump($libro);
 }
 
 if(isset($_POST['submit'])){  
@@ -57,21 +60,19 @@ if(isset($_POST['submit'])){
       $anioError = "Solo se permiten números";
     }
 
-    if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 
-        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) ){
-
-          
-
+    if( (!empty($tituloError)) || (!empty($autorError)) || (!empty($generoError)) || 
+        (!empty($anioError)) ){
+        echo "Aca no!";
     }else{
       // Modificar usuario
-     /*  $nuevo_usuario = new Usuario ($idUsuario, $ci, $nombre, $apellido, $mail, $tel, $dir);
-      $respuesta = setUsuario($nuevo_usuario);
+      $nuevo_libro = new Libro ($_POST['id'], $titulo, $autor, $genero, $anio);
+      $respuesta = setLibro($nuevo_libro);
 
       if (!empty($respuesta)) {
         if($respuesta['estado'] == 1){
-          header("Location: usuarios.php?idusu=".$respuesta['resp']);
+          header("Location: libros.php?idusu=".$respuesta['resp']);
         }
-      } */
+      }
 
     }
 
@@ -98,7 +99,7 @@ if(isset($_POST['submit'])){
         <div class="container">
             <!-- Contenedor Principal -->
             <div class="row">
-              <h1 class="text-center">Editar Usuario</h1>
+              <h1 class="text-center">Editar Libro</h1>
             </div>
             <hr>
             <div class="row justify-content-center">
@@ -117,31 +118,38 @@ if(isset($_POST['submit'])){
                 
 
                 <div class="mb-3">
-                  <label for="" class="form-label">CI</label><span class="error">* <?php echo $ciError;?></span>
-                  <input type="text" class="form-control" name="ci" value="<?=$usuario->getCi()?>">
+                  <label for="" class="form-label">Titulo</label><span class="error">* <?php echo $tituloError;?></span>
+                  <input type="text" class="form-control" name="titulo" value="<?=$titulo?>">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Nombre</label><span class="error">* <?php echo $nombreError;?></span>
-                  <input type="text" class="form-control" name="nombre" value="<?=$usuario->getNombre()?>">
+                  <label for="" class="form-label">Autor</label><span class="error">* <?php echo $autorError;?></span>
+                  <input type="text" class="form-control" name="autor" value="<?=$autor?>">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Apellido</label><span class="error">* <?php echo $apellidoError;?></span>
-                  <input type="text" class="form-control" name="apellido" value="<?=$usuario->getApellido()?>">
+                  <label for="" class="form-label">Género</label><span class="error">* <?php echo $generoError;?></span>
+                  <select class="form-select" aria-label="" name="genero">
+                    <option value="1" <?php if ($genero == "comedia") echo "selected";?>>Comedia</option>
+                    <option value="2" <?php if ($genero == "drama") echo "selected";?>>Drama</option>
+                    <option value="3" <?php if ($genero == "novela") echo "selected";?>>Novela</option>
+                    <option value="4" <?php if ($genero == "informatica") echo "selected";?>>Informática</option>
+                    <option value="5" <?php if ($genero == "ciencia") echo "selected";?>>Ciencia</option>
+                    <option value="6" <?php if ($genero == "fantasia") echo "selected";?>>Fantasia</option>
+                  </select>
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Email</label><span class="error">* <?php echo $mailError;?></span>
-                  <input type="text" class="form-control" name="mail" value="<?=$usuario->getMail()?>">
-                </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">Teléfono</label><span class="error">* <?php echo $telError;?></span>
-                  <input type="text" class="form-control" name="tel" value="<?=$usuario->getTel()?>">
-                </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">Dirección</label><span class="error">* <?php echo $dirError;?></span>
-                  <input type="text" class="form-control" name="dir" value="<?=$usuario->getDir()?>">
+                  <label for="" class="form-label">Año</label><span class="error">* <?php echo $anioError;?></span>
+                  <select class="form-select" aria-label="" name="anio">
+                    <?php
+                    for ($i = 1900; $i < date("Y"); $i++) {
+                      echo "<option value='".$i."'>".$i."</option>";
+                    }
+                    ?>
+                  </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary" name="submit">Modificar Usuario</button>
+                <input type="hidden" class="form-control" name="id" value="<?=$libro->getId()?>">
+
+                <button type="submit" class="btn btn-primary" name="submit">Modificar Libro</button>
               </form>
 
               </div>

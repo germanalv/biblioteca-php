@@ -43,6 +43,7 @@ $sidebar_op = 3; /* Marco como activo el menu "Usuarios" */
                     <th scope="col">Email</th>
                     <th scope="col">Teléfono</th>
                     <th scope="col">Dirección</th>
+                    <th scope="col">Rol</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -61,6 +62,7 @@ $sidebar_op = 3; /* Marco como activo el menu "Usuarios" */
                       <td><?=$usuario->getMail()?></td>
                       <td><?=$usuario->getTel()?></td>
                       <td><?=$usuario->getDir()?></td>
+                      <td><?=$usuario->getRol()?></td>
                       <td>
                         <div class="row">
                           <div class="col-3" >

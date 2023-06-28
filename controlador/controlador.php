@@ -95,7 +95,7 @@ function getLibro($idLibro){
 function setLibro($libro){
     try {
         $conn =  connDB();
-        $sql = "UPDATE libros SET titulo = '".$libro->getTitulo()."', nombre = '".$libro->getAutor()."', apellido = '".$libro->getGenero()."', mail = '".$libro->getAnio()."', tel = '".$libro->getCantEjemplares()."' WHERE id = ".$libro->getId();
+        $sql = "UPDATE libros SET titulo = '".$libro->getTitulo()."', autor = '".$libro->getAutor()."', genero = '".$libro->getGenero()."', anio = '".$libro->getAnio()."' WHERE id = ".$libro->getId();
 
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
@@ -119,7 +119,20 @@ function setLibro($libro){
     }
 }
 
+function eliminarLibro($id){
+    try {
+        $conn =  connDB();
+        $sql = "DELETE FROM libros WHERE id = ".$id;
 
+        if ($conn->query($sql) === TRUE) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+}
 
 /***********************************************************/
 /******************* Funciones Usuarios ********************/
@@ -377,8 +390,52 @@ function addPrestamo($objPrestamo){
     }
 }
 
+function getPrestamo($idPrestamo){
 
+    try {
+        $conn =  connDB();
+        $sql = "SELECT * FROM prestamo WHERE id = ".$idPrestamo;
+        $resultado = $conn->query($sql);
+        $fila = $resultado->fetch_assoc();
+        //var_dump($fila);
+        $conn->close();
+        if( !empty($fila) ) { 
+            $prestamo = new Prestamo($fila['id'], $fila['id_libro'], $fila['id_usuario'], $fila['fecha_prestamo'], $fila['fecha_devolucion'], $fila['estado']);
+            return $prestamo;
+        } else { 
+            return NULL;
+        }
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+    
+}
 
+function setPrestamo($prestamo){
+    try {
+        $conn =  connDB();
+        $sql = "UPDATE prestamo SET id_libro = '".$prestamo->getIdLibro()."', id_usuario = '".$prestamo->getIdUsuario()."', fecha_prestamo = '".$prestamo->getFecha_prestamo()."', fecha_devolucion = '".$prestamo->getFecha_devolucion()."', estado = '".$prestamo->getEstado()."' WHERE id = ".$prestamo->getEstado();
 
+        if ($conn->query($sql) === TRUE) {
+            $id = $conn->insert_id;
+
+            $respuesta['estado'] = 1;
+            $respuesta['resp'] = 'OK';
+
+            $conn->close();
+            return $respuesta;
+        }else{  
+            $conn->close();
+            $respuesta['estado'] = 0;
+            $respuesta['resp'] = "No se pudo actualizar el libro";
+            return $respuesta;
+        }
+             
+    } catch (Exception $e) {
+        $respuesta['estado'] = 0;
+        $respuesta['resp'] = "No se pudo actualizar el libro<br>ERROR: ".$e->getMessage();
+        return $respuesta;
+    }
+}
 
 ?>

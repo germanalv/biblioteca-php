@@ -2,11 +2,11 @@
 //require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
 $sidebar_op = 2; /* Maco como activo el menu "Libros" */
-session_start();
+//session_start();
 checkLogin();
 
 // Seteo e inicializo variables vacias.
-$titulo = $autor = $anio = $genero = $CantEjemplares = "";
+$titulo = $autor = $anio = $genero = "";
 $tituloError = $autorError = $anioError = $generoError = "";
 
 if(isset($_POST['submit'])){
@@ -53,7 +53,7 @@ if(isset($_POST['submit'])){
 
     }else{
       // Agregar libro
-      $nuevo_libro = new Libro (0, $titulo, $autor, $genero, $anio, $CantEjemplares);
+      $nuevo_libro = new Libro (0, $titulo, $autor, $genero, $anio);
       $respuesta = addLibro($nuevo_libro);
 
       if (!empty($respuesta)) {
@@ -124,24 +124,13 @@ if(isset($_POST['submit'])){
                 <div class="mb-3">
                   <label for="" class="form-label">Año</label><span class="error">* <?php echo $anioError;?></span>
                   <select class="form-select" aria-label="" name="anio">
+                    <option value="0">Seleccionar año</option>
                     <?php
                     for ($i = 1900; $i < date("Y"); $i++) {
                       echo "<option value='".$i."'>".$i."</option>";
                     }
                     ?>
                   </select>
-                </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">Cantidad de Ejemplares</label><span class="error">* <?php echo $CantEjemplaresError;?></span>
-
-                  <select class="form-select" aria-label="" name="CantEjemplares">
-                    <?php
-                    for ($i = 0; $i < 50; $i++) {
-                      echo "<option value='".$i."'>".$i."</option>";
-                    }
-                    ?>
-                  </select>
-                  
                 </div>
 
                 <button type="submit" class="btn btn-primary" name="submit">Guardar Libro</button>

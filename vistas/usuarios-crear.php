@@ -83,7 +83,7 @@ if(isset($_POST['submit'])){
     **************************/
     $rol = test_input($_POST["rol"]); 
     if ($rol == "0") {
-      $telError = "Debe seleccionar un rol";
+      $rolError = "Debe seleccionar un rol";
     }
 
     if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 
@@ -166,9 +166,9 @@ if(isset($_POST['submit'])){
                   <input type="text" class="form-control" name="dir">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Rol</label><span class="error">* <?php echo $generoRol;?></span>
+                  <label for="" class="form-label">Rol</label><span class="error">* <?php echo $rolError;?></span>
                   <select class="form-select" aria-label="" name="rol">
-                    <option value="0">Seleccionar Genero</option>
+                    <option value="0">Seleccionar Rol</option>
                     <option value="1">Administrador</option>
                     <option value="2">General</option>
                   </select>

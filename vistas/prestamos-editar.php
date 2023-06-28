@@ -11,18 +11,30 @@ $idLibroError = $idUsuarioError = $fecha_prestamoError = $fecha_devolucionError 
 $respuesta = "";
 $nuevo_prestamo = "";
 
+/* Obtengo los datos del préstamo a editar 
+********************************************/
+if(!empty($_GET['id'])){
+    $prestamo = getPrestamo($_GET['id']);
+    $idLibro = $prestamo->getIdLibro();
+    $idUsuario = $prestamo->getIdUsuario();
+    $fecha_prestamo = $prestamo->getFecha_prestamo();
+    $fecha_devolucion = $prestamo->getFecha_devolucion();
+    $estado = $prestamo->getEstado();
+    //var_dump($prestamo);
+  }
+
 if(isset($_POST['submit'])){
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    /* Validación Genero
+    /* Validación usuario
     **************************/
     $idUsuario = test_input($_POST["usuario"]);
     if ($idUsuario == '0') {
       $idUsuarioError = "Elija un usuario"; /* OJO ACA!!!!!!! */
     }
 
-    /* Validación Genero
+    /* Validación libro
     **************************/
     $idLibro = test_input($_POST["libro"]);
     if ($idLibro == '0') {
@@ -30,13 +42,11 @@ if(isset($_POST['submit'])){
     }
 
     if( (!empty($idLibroError)) || (!empty($idUsuarioError)) ){
-
-
-
+        echo "Aca no!";
     }else{
-      // Agregar préstamo
-      $nuevo_prestamo = new Prestamo (0, $idLibro, $idUsuario, $fecha_prestamo, $fecha_devolucion, $estado);
-      $respuesta = addPrestamo($nuevo_prestamo);
+      // Modificar préstamo
+      $nuevo_prestamo = new Prestamo ($_POST['id'], $idLibro, $idUsuario, $fecha_prestamo, $fecha_devolucion, $estado);
+      $respuesta = setPrestamo($nuevo_prestamo);
 
       if (!empty($respuesta)) {
         if($respuesta['estado'] == 1){
@@ -108,11 +118,7 @@ if(isset($_POST['submit'])){
                     ?>
                   </select>
                 </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">Fecha Préstamo</label><span class="error">* <?php echo $idLibroError;?></span>
-                  <input type="date" class="form-control" name="fecha_prestamo"/>
-                  
-                </div>
+               
 
                 <button type="submit" class="btn btn-primary" name="submit">Registrar préstamo</button>
               </form>
