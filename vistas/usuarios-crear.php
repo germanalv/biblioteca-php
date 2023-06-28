@@ -166,7 +166,7 @@ if(isset($_POST['submit'])){
                   <input type="text" class="form-control" name="dir">
                 </div>
                 <div class="mb-3">
-                  <label for="" class="form-label">Rol</label><span class="error">* <?php echo $generoRol;?></span>
+                  <label for="" class="form-label">Rol</label><span class="error">* <?php echo $rolError;?></span>
                   <select class="form-select" aria-label="" name="rol">
                     <option value="0">Seleccionar Genero</option>
                     <option value="1">Administrador</option>
