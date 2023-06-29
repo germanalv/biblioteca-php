@@ -498,4 +498,24 @@ function devolverPrestamo($iDprestamo, $fecha_devolucion){
     }
 }
 
+function eliminarPrestamo($id){
+    try {
+        $conn =  connDB();
+        $sql = "DELETE FROM prestamo WHERE id = ".$id;
+
+        if ($conn->query($sql) === TRUE) {
+            return "OK";
+        } else {
+            return "No fue posible eliminar el prestamo";
+        }
+    } catch (Exception $e) {
+        /* if($e->getCode() == 1451){
+            return "No fue posible eliminar el libros: Existen prestamos asociados"; 
+        }else{
+            return $e->getMessage();
+        } */
+        return $e->getMessage();
+    }
+}
+
 ?>
