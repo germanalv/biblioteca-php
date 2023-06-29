@@ -126,12 +126,16 @@ function eliminarLibro($id){
         $sql = "DELETE FROM libros WHERE id = ".$id;
 
         if ($conn->query($sql) === TRUE) {
-            return true;
+            return "OK";
         } else {
-            return false;
+            return "No fue posible eliminar el libro";
         }
     } catch (Exception $e) {
-        return $e->getMessage();
+        if($e->getCode() == 1451){
+            return "No fue posible eliminar el libros: Existen prestamos asociados"; 
+        }else{
+            return $e->getMessage();
+        }
     }
 }
 
@@ -335,10 +339,7 @@ function addUsuario($objUsuario){
 function eliminarUsuario($id){
     try {
         $conn =  connDB();
-        $sql = "DELETE FROM usuarios WHERE id = ".$id;
-        
-        $conn->query($sql);
-        
+        $sql = "DELETE FROM usuarios WHERE id = ".$id;        
         
         if ($conn->query($sql) === TRUE) {
             return "OK";
