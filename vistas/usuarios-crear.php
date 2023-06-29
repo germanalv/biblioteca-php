@@ -8,8 +8,8 @@ if ( !empty($_SESSION['nombre']) ) {
 $sidebar_op = 3; /* Maco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
-$ci = $nombre = $apellido = $mail = $tel = $dir = $rol = "";
-$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = $rolError = "";
+$ci = $nombre = $apellido = $mail = $tel = $dir = $rol = $pass = "";
+$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = $rolError = $passError ="";
 $respuesta = "";
 $nuevo_usuario = "";
 
@@ -88,14 +88,21 @@ if(isset($_POST['submit'])){
       $rolError = "Debe seleccionar un rol";
     }
 
+    /* Validación Password
+    **************************/
+    $pass = test_input($_POST["pass"]);
+    if (empty($pass)) {
+      $passError = "Inserte el password";
+    }
+
     if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 
-        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) || (!empty($rolError)) ){
+        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) || (!empty($rolError)) || (!empty($passError)) ){
 
           
 
     }else{
       // Grabar usuario
-      $nuevo_usuario = new Usuario (0, $ci, $nombre, $apellido, $mail, $tel, $dir, $rol);
+      $nuevo_usuario = new Usuario (0, $ci, $nombre, $apellido, $mail, $tel, $dir, $rol, $pass) ;
       $respuesta = addUsuario($nuevo_usuario);
 
       if (!empty($respuesta)) {
@@ -188,6 +195,11 @@ if(isset($_POST['submit'])){
                     ?>
                     <option value="2">General</option>
                   </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="" class="form-label">Password</label><span class="error">* <?php echo $passError;?></span>
+                  <input type="password" class="form-control" name="pass">
                 </div>
                 
                 <?php 

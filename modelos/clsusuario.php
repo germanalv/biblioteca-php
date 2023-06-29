@@ -12,12 +12,12 @@ class Usuario{
     private $tel;
     private $dir;
     private $rol;/* Roles => 1 - Administrador - 2 - General */
-
+    private $pass;
 
     /**
      * Class constructor.
      */
-    public function __construct($pId, $pCi, $pNombre, $pApellido, $pMail, $pTel, $pDir, $pRol){
+    public function __construct($pId, $pCi, $pNombre, $pApellido, $pMail, $pTel, $pDir, $pRol, $pPass){
         $this->id = $pId;
         $this->ci = $pCi;
         $this->nombre = $pNombre;
@@ -26,6 +26,8 @@ class Usuario{
         $this->tel = $pTel;
         $this->dir = $pDir;
         $this->rol = $pRol;
+        $this->pass = $pPass;
+        
     }
 
     /**********
@@ -55,6 +57,9 @@ class Usuario{
     public function getRol(){
         return $this->rol;
     }
+    public function getPass(){
+        return $this->pass;
+    }
 
     /**********
      * Setters.
@@ -80,6 +85,9 @@ class Usuario{
     }
     public function setRol($pRol){
         $this->rol = $pRol;
+    }
+    public function setPass($pPass){
+        $this->pass = $pPass;
     }
 
 }

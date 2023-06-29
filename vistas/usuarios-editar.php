@@ -6,8 +6,8 @@ checkRolAdmin();
 $sidebar_op = 3; /* Marco como activo el menu "Usuarios" */
 
 // Seteo e inicializo variables vacias.
-$ci = $nombre = $apellido = $mail = $tel = $dir = $rol = "";
-$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = $rolError = "";
+$ci = $nombre = $apellido = $mail = $tel = $dir = $rol = $pass = "";
+$ciError = $nombreError = $apellidoError = $mailError = $telError = $dirError = $rolError = $passError ="";
 $respuesta = "";
 $nuevo_usuario = "";
 
@@ -16,6 +16,7 @@ $nuevo_usuario = "";
 ********************************************/
 if(!empty($_GET['id'])){
   $usuario = getUsuario($_GET['id']);
+  $id = $usuario->getId();
   $ci = $usuario->getCi();
   $nombre = $usuario->getNombre();
   $apellido = $usuario->getApellido();
@@ -23,6 +24,7 @@ if(!empty($_GET['id'])){
   $tel = $usuario->getTel();
   $dir = $usuario->getDir();
   $rol = $usuario->getRol();
+  $pass = $usuario->getPass();
   //var_dump($usuario);
 }
 
@@ -30,6 +32,8 @@ if(!empty($_GET['id'])){
 if(isset($_POST['submit'])){  
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $id = $_POST["id"];
 
     /* Validación Cedula 
     **************************/
@@ -94,13 +98,22 @@ if(isset($_POST['submit'])){
       $telError = "Debe seleccionar un rol";
     }
 
+    /* Validación Password
+    **************************/
+    $pass = test_input($_POST["pass"]);
+    if (empty($pass)) {
+      $passError = "Inserte el password";
+    }
+
+
+
 
     if( (!empty($ciError)) || (!empty($nombreError)) || (!empty($apellidoError)) || 
-        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) || (!empty($rolError)) ){
-          echo "Aca no!";
+        (!empty($mailError)) || (!empty($telError)) || (!empty($dirError)) || (!empty($rolError))  || (!empty($passError)) ){
+          //echo "Aca no!";
     }else{
       // Modificar usuario
-      $nuevo_usuario = new Usuario ($_POST['id'], $ci, $nombre, $apellido, $mail, $tel, $dir, $rol);
+      $nuevo_usuario = new Usuario ($id, $ci, $nombre, $apellido, $mail, $tel, $dir, $rol, $pass);
 
       $respuesta = setUsuario($nuevo_usuario);
 
@@ -186,7 +199,13 @@ if(isset($_POST['submit'])){
                   </select>
                 </div>
 
-                <input type="hidden" class="form-control" name="id" value="<?=$usuario->getId()?>">
+                <div class="mb-3">
+                  <label for="" class="form-label">Password</label><span class="error">* <?php echo $passError;?></span>
+                  <input type="password" class="form-control" name="pass" value="<?=$pass?>">
+                </div>
+                
+
+                <input type="hidden" class="form-control" name="id" value="<?=$id?>">
 
                 <button type="submit" class="btn btn-primary" name="submit">Modificar Usuario</button>
               </form>

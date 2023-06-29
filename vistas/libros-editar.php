@@ -15,6 +15,7 @@ $nuevo_libro = "";
 ********************************************/
 if(!empty($_GET['id'])){
   $libro = getLibro($_GET['id']);
+  $id = $libro->getId();
   $titulo = $libro->getTitulo();
   $autor = $libro->getAutor();
   $genero = $libro->getGenero();
@@ -62,7 +63,6 @@ if(isset($_POST['submit'])){
 
     if( (!empty($tituloError)) || (!empty($autorError)) || (!empty($generoError)) || 
         (!empty($anioError)) ){
-        echo "Aca no!";
     }else{
       // Modificar usuario
       $nuevo_libro = new Libro ($_POST['id'], $titulo, $autor, $genero, $anio);
@@ -152,7 +152,7 @@ if(isset($_POST['submit'])){
                   </select>
                 </div>
 
-                <input type="hidden" class="form-control" name="id" value="<?=$libro->getId()?>">
+                <input type="hidden" class="form-control" name="id" value="<?=$id?>">
 
                 <button type="submit" class="btn btn-primary" name="submit">Modificar Libro</button>
               </form>
