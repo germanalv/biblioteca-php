@@ -16,8 +16,8 @@ class Prestamo{
         $this->id = $pId;
         $this->idLibro = $pIdLibro;
         $this->idUsuario = $pIdUsuario;
-        $this->fecha_devolucion = $pFecha_prestamo;
-        $this->fecha_prestamo = $pFecha_devolucion;
+        $this->fecha_prestamo = $pFecha_prestamo;
+        $this->fecha_devolucion = $pFecha_devolucion;
         $this->estado = $pEstado;
     }
 

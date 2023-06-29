@@ -15,21 +15,28 @@ if(isset($_POST['submit'])){
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    /* Validación Genero
+    /* Validación Usuario
     **************************/
     $idUsuario = test_input($_POST["usuario"]);
     if ($idUsuario == '0') {
       $idUsuarioError = "Elija un usuario"; /* OJO ACA!!!!!!! */
     }
 
-    /* Validación Genero
+    /* Validación Libro
     **************************/
     $idLibro = test_input($_POST["libro"]);
     if ($idLibro == '0') {
       $idLibroError = "Elija un libro"; /* OJO ACA!!!!!!! */
     }
 
-    if( (!empty($idLibroError)) || (!empty($idUsuarioError)) ){
+    /* Validación Fecha
+    **************************/
+    $fecha_prestamo = test_input($_POST["fecha_prestamo"]);
+    if ($fecha_prestamo == '0') {
+      $fecha_prestamoError = "Elija una fecha"; /* OJO ACA!!!!!!! */
+    }
+
+    if( (!empty($idLibroError)) || (!empty($idUsuarioError)) || (!empty($fecha_prestamoError))){
 
 
 
@@ -101,7 +108,7 @@ if(isset($_POST['submit'])){
                   <select class="form-select" aria-label="" name="libro">
                   <option value="0">Seleccionar libro</option>
                     <?php
-                    $libros = getLibros();
+                    $libros = getLibrosDisponibles();
                     foreach ($libros as $libro) {
                       echo "<option value='".$libro->getId()."'>".$libro->getTitulo()." </option>";
                     }

@@ -43,21 +43,21 @@ checkLogin();
                 </thead>
                 <tbody>
                 <?php
-                $prestamos = getPrestamos();
+                $prestamos = getPrestamos(1);
                 // var_dump($usuarios);
                 foreach ($prestamos as $prestamo) {
                 ?>
                   <tr>
                     <td><?=$prestamo->getId()?></td>
-                    <td><?=$prestamo->getIdLibro()?></td>
-                    <td><?=$prestamo->getIdUsuario()?></td>
+                    <td><?=getLibro($prestamo->getIdLibro())->getTitulo()?></td>
+                    <td><?=getUsuario($prestamo->getIdUsuario())->getNombre()?></td>
                     <td><?=$prestamo->getFecha_prestamo()?></td>
                     <td><?=$prestamo->getFecha_devolucion()?></td>
                     <td><?=$prestamo->getEstado()?></td>
                     <td>
-                      <button class="btn btn-warning btn-sm mb-2">
+                    <a class="btn btn-warning btn-sm pb-2" name="btnEditar" href="prestamos-devolucion.php?id=<?=$prestamo->getId()?>">
                         Devolución
-                      </button>
+                    </a>
                     </td>
                     <td>
                     <a class="btn btn-warning btn-sm pb-2" name="btnEditar" href="prestamos-editar.php?id=<?=$prestamo->getId()?>">

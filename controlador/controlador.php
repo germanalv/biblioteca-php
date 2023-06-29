@@ -135,6 +135,25 @@ function eliminarLibro($id){
     }
 }
 
+function getLibrosDisponibles(){
+
+    try {
+        $conn =  connDB();
+        $sql = "SELECT * FROM libros WHERE id NOT IN (SELECT id_libro FROM prestamo WHERE estado = 1)";
+        $resultado = $conn->query($sql);
+        $listaLibrosDisponibles = array();
+        while ($fila = $resultado->fetch_assoc()) {
+            $libro = new Libro($fila['id'], $fila['titulo'], $fila['autor'], $fila['genero'], $fila['anio']);
+            $listaLibrosDisponibles[] = $libro;
+        }
+        $conn->close();
+        return $listaLibrosDisponibles;
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+    
+}
+
 /***********************************************************/
 /******************* Funciones Usuarios ********************/
 /***********************************************************/
@@ -341,11 +360,18 @@ function eliminarUsuario($id){
 /******************* Funciones Prestamos *******************/
 /***********************************************************/
 
-function getPrestamos(){
+function getPrestamos($filtro){
 
     try {
         $conn =  connDB();
-        $sql = "SELECT * FROM prestamo";
+        if($filtro == 0){
+            $sql = "SELECT * FROM prestamo";
+        } elseif ($filtro == 1){
+            $sql = "SELECT * FROM prestamo WHERE estado = 1";
+        } else {
+            $sql = "SELECT * FROM prestamo WHERE estado = 2";
+        }
+        
         $resultado = $conn->query($sql);
         
         $listaPrestamos = array();
@@ -369,14 +395,10 @@ function addPrestamo($objPrestamo){
     //var_dump($objPrestamo);
     //Estado 1 es prestado
     $respuesta = [];
-    $fecha_actual = date("d-m-Y");
-    $fecha_devolucion = strtotime($fecha_actual);
-    $fecha_devolucion = strtotime("+7 day", $fecha_devolucion);
     try {
         $conn =  connDB();
-        $sql = "INSERT INTO prestamo (id_libro, id_usuario, fecha_prestamo, fecha_devolución, estado) 
-                VALUES('".$objPrestamo->getIdLibro()."', '".$objPrestamo->getIdUsuario()."', '$fecha_actual', 
-                '".$fecha_devolucion."', '1')";
+        $sql = "INSERT INTO prestamo (id_libro, id_usuario, fecha_prestamo, estado) 
+                VALUES('".$objPrestamo->getIdLibro()."', '".$objPrestamo->getIdUsuario()."', '".$objPrestamo->getFecha_prestamo()."', 1)";
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
@@ -438,6 +460,33 @@ function setPrestamo($prestamo){
             $conn->close();
             $respuesta['estado'] = 0;
             $respuesta['resp'] = "No se pudo actualizar el libro";
+            return $respuesta;
+        }
+             
+    } catch (Exception $e) {
+        $respuesta['estado'] = 0;
+        $respuesta['resp'] = "No se pudo actualizar el libro<br>ERROR: ".$e->getMessage();
+        return $respuesta;
+    }
+}
+
+function devolverPrestamo($iDprestamo, $fecha_devolucion){
+    try {
+        $conn =  connDB();
+        $sql = "UPDATE prestamo SET fecha_devolución = '".$fecha_devolucion."', estado = 2 WHERE id = ".$iDprestamo;
+
+        if ($conn->query($sql) === TRUE) {
+            $rows = $conn->affected_rows;
+
+            $respuesta['estado'] = 1;
+            $respuesta['resp'] = 'OK';
+
+            $conn->close();
+            return $respuesta;
+        }else{  
+            $conn->close();
+            $respuesta['estado'] = 0;
+            $respuesta['resp'] = "No se pudo devolver el prestamo";
             return $respuesta;
         }
              

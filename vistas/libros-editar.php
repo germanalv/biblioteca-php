@@ -128,12 +128,12 @@ if(isset($_POST['submit'])){
                 <div class="mb-3">
                   <label for="" class="form-label">Género</label><span class="error">* <?php echo $generoError;?></span>
                   <select class="form-select" aria-label="" name="genero">
-                    <option value="1" <?php if ($genero == "comedia") echo "selected";?>>Comedia</option>
-                    <option value="2" <?php if ($genero == "drama") echo "selected";?>>Drama</option>
-                    <option value="3" <?php if ($genero == "novela") echo "selected";?>>Novela</option>
-                    <option value="4" <?php if ($genero == "informatica") echo "selected";?>>Informática</option>
-                    <option value="5" <?php if ($genero == "ciencia") echo "selected";?>>Ciencia</option>
-                    <option value="6" <?php if ($genero == "fantasia") echo "selected";?>>Fantasia</option>
+                    <option value="comedia" <?php if ($genero == "comedia") echo "selected";?>>Comedia</option>
+                    <option value="drama" <?php if ($genero == "drama") echo "selected";?>>Drama</option>
+                    <option value="novela" <?php if ($genero == "novela") echo "selected";?>>Novela</option>
+                    <option value="informatica" <?php if ($genero == "informatica") echo "selected";?>>Informática</option>
+                    <option value="ciencia" <?php if ($genero == "ciencia") echo "selected";?>>Ciencia</option>
+                    <option value="fantasia" <?php if ($genero == "fantasia") echo "selected";?>>Fantasia</option>
                   </select>
                 </div>
                 <div class="mb-3">
@@ -141,7 +141,12 @@ if(isset($_POST['submit'])){
                   <select class="form-select" aria-label="" name="anio">
                     <?php
                     for ($i = 1900; $i < date("Y"); $i++) {
-                      echo "<option value='".$i."'>".$i."</option>";
+                      if($anio == $i){
+                        echo "<option value='".$i."' selected  >".$i."</option>";
+                      } else {
+                        echo "<option value='".$i."'>".$i."</option>";
+                      }
+                      
                     }
                     ?>
                   </select>
