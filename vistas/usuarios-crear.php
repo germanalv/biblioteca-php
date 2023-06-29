@@ -1,8 +1,10 @@
 <?php
 //require('../general/vizualizar_errores.php');
 require('../controlador/controlador.php');
-checkLogin();
-checkRolAdmin();
+//checkLogin();
+if ( !empty($_SESSION['nombre']) ) {
+  checkRolAdmin();
+}
 $sidebar_op = 3; /* Maco como activo el menu "Libros" */
 
 // Seteo e inicializo variables vacias.
@@ -98,7 +100,14 @@ if(isset($_POST['submit'])){
 
       if (!empty($respuesta)) {
         if($respuesta['estado'] == 1){
-          header("Location: usuarios.php?idusu=".$respuesta['resp']);
+          if ( $_POST['notSession'] == "1" ) {
+            header("Location: login.php?idusu=".$respuesta['resp']);
+          }else{
+            header("Location: usuarios.php?idusu=".$respuesta['resp']); 
+          }
+          
+          
+
         }
       }
 
@@ -165,14 +174,31 @@ if(isset($_POST['submit'])){
                   <label for="" class="form-label">Dirección</label><span class="error">* <?php echo $dirError;?></span>
                   <input type="text" class="form-control" name="dir">
                 </div>
+                
                 <div class="mb-3">
                   <label for="" class="form-label">Rol</label><span class="error">* <?php echo $rolError;?></span>
                   <select class="form-select" aria-label="" name="rol">
                     <option value="0">Seleccionar Rol</option>
+                    <?php 
+                    if ( empty($_GET['r']) ) {
+                    ?>
                     <option value="1">Administrador</option>
+                    <?php 
+                    } 
+                    ?>
                     <option value="2">General</option>
                   </select>
                 </div>
+                
+                <?php 
+                if ( !empty($_GET['r']) ) {
+                ?>
+                    <input type="hidden" name="notSession" value="1"/>
+                <?php 
+                } 
+                ?>
+                
+                
 
                 <button type="submit" class="btn btn-primary" name="submit">Guardar Usuario</button>
               </form>

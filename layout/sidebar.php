@@ -18,10 +18,17 @@ switch ($sidebar_op) {
 ?>
 
 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <a href="index.php" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
           <span class="fs-4">Biblioteca</span>
       </a>
       <hr>
+
+      <?php
+      
+      if ( !empty($_SESSION['nombre']) ) {
+
+      ?>
+
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
           <a href="index.php" class="nav-link <?=$prestamos_opc?>" aria-current="page">
@@ -47,11 +54,7 @@ switch ($sidebar_op) {
       </ul>
 
 
-      <?php
       
-      if ( !empty($_SESSION['nombre']) ) {
-
-      ?>
       <div class="dropdown mb-4">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">

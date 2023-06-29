@@ -51,21 +51,26 @@ if(isset($_POST['submit'])){
 
 <body class="d-flex align-items-center py-4 bg-body-tertiary bg-dark">
     <main class="form-signin w-100 m-auto bg-dark rounded h-50">
+           
         <form class="m-3" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
             <h2 class="h3 mb-3 fw-normal text-center text-white">Bienvenido a la Biblioteca</h2>
 
+            <?php if( !empty( $_GET['idusu'] ) ) { ?>
+            <div class="alert alert-success" role="alert my-2">El usuario se creo correctamente</div>
+            <?php } ?>
+
             <?php 
-                if ( !empty($mailError) || !empty($passError) || !empty($error) ) {
-                ?>
-                    <div class="alert alert-danger" role="alert my-2">
-                        <?=$mailError?>
-                        <?=$passError?>
-                        <?=$error?>
-                    </div>
-                <?php 
-                } 
-                ?>
+            if ( !empty($mailError) || !empty($passError) || !empty($error) ) {
+            ?>
+                <div class="alert alert-danger" role="alert my-2">
+                    <?=$mailError?>
+                    <?=$passError?>
+                    <?=$error?>
+                </div>
+            <?php 
+            } 
+            ?>
 
             <div class="form-floating">
                 <input type="email" class="form-control" id="mail" name="mail" placeholder="Ingrese Mail">
@@ -76,6 +81,7 @@ if(isset($_POST['submit'])){
                 <label for="password">Password</label>
             </div>
             <button class="btn btn-primary w-100 py-2" type="submit" name="submit">Iniciar Sesión</button>
+            <a class="btn btn-warning w-100 py-2 mt-2" href="usuarios-crear.php?r=1">Registrarse</a>
         </form>
     </main>
 
