@@ -172,7 +172,7 @@ function getUsuarios(){
         $listaUsuarios = array();
 
         while ($fila = $resultado->fetch_assoc()) {
-            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol']);
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol'], $fila['password']);
             $listaUsuarios[] = $usuario;
         }
 
@@ -197,7 +197,7 @@ function getUsuario($id){
         //var_dump($fila);
         $conn->close();
         if( !empty($fila) ) { 
-            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol']);
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol'], $fila['password']);
             return $usuario;
         } else { 
             return NULL;
@@ -221,7 +221,7 @@ function getUsuarioByMail($mail){
         $fila = $resultado->fetch_assoc();
         $conn->close();
         if( !empty($fila) ) { 
-            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol']);
+            $usuario = new Usuario($fila['id'], $fila['ci'], $fila['nombre'], $fila['apellido'], $fila['mail'], $fila['tel'], $fila['dir'], $fila['rol'], $fila['password']);
             return $usuario;
         } else { 
             return NULL;
@@ -278,7 +278,10 @@ function logout(){
 function setUsuario($usuario){
     try {
         $conn =  connDB();
-        $sql = "UPDATE usuarios SET ci = '".$usuario->getCi()."', nombre = '".$usuario->getNombre()."', apellido = '".$usuario->getApellido()."', mail = '".$usuario->getMail()."', tel = '".$usuario->getTel()."', dir = '".$usuario->getDir()."', rol = ".$usuario->getRol()." WHERE id = ".$usuario->getId();
+        $sql = "UPDATE usuarios SET ci = '".$usuario->getCi()."', nombre = '".$usuario->getNombre()."', 
+        apellido = '".$usuario->getApellido()."', mail = '".$usuario->getMail()."', 
+        tel = '".$usuario->getTel()."', dir = '".$usuario->getDir()."', 
+        rol = ".$usuario->getRol().", password = '".$usuario->getPass()."' WHERE id = ".$usuario->getId();
 
         if ($conn->query($sql) === TRUE) {
             $rows = $conn->affected_rows;
@@ -311,7 +314,7 @@ function addUsuario($objUsuario){
         $conn =  connDB();
         $sql = "INSERT INTO usuarios (ci, nombre, apellido, mail, tel, dir, password, rol) 
                 VALUES('".$objUsuario->getCi()."', '".$objUsuario->getNombre()."', '".$objUsuario->getApellido()."', 
-                '".$objUsuario->getMail()."', '".$objUsuario->getTel()."', '".$objUsuario->getDir()."', '123456', ".$objUsuario->getRol().")";
+                '".$objUsuario->getMail()."', '".$objUsuario->getTel()."', '".$objUsuario->getDir()."', '".$objUsuario->getPass()."', ".$objUsuario->getRol().")";
         //echo $sql;
         if ($conn->query($sql) === TRUE) {
             $id = $conn->insert_id;
