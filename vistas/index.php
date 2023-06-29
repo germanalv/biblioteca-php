@@ -66,6 +66,7 @@ checkLogin();
                     </td>
                     <td>
                       <div class="row">
+                        <!--
                         <div class="col-3">
                           <a class="btn btn-warning btn-sm pb-2" name="btnEditar" href="prestamos-editar.php?id=<?=$prestamo->getId()?>">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -73,6 +74,7 @@ checkLogin();
                             </svg>
                           </a>
                         </div>
+                        -->
                         <div class="col-3">
 
                           <button type="button" class="btn btn-danger btn-sm pb-2" data-bs-toggle="modal" data-bs-target="#modalPrestamo<?=$prestamo->getId()?>">
@@ -88,12 +90,12 @@ checkLogin();
                               <div class="modal-content">
 
                                 <div class="modal-header">
-                                  <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminar Prestamo</h1>
+                                  <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Eliminar Préstamo.</h1>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
                                 <div class="modal-body">
-                                  Confirma que desea eliminar el prestamo
+                                  ¿Confirma que desea eliminar el préstamo?
                                 </div>
 
                                 <div class="modal-footer">

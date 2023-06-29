@@ -17,3 +17,58 @@ modificar usuario
 borrar usuario
 
 No le gustó que redeclarara la conexion a la DB en la clase Usuario, cuando la comenté, funcionó
+
+Rol Administrador 
+
+Usuarios
+
+    Listar Usuarios *
+    
+    Crear Usuario *
+        Validacion datos y vacio *
+            No se permite desde el lado de adentro de la aplicacion, crear usuarios con passwords,
+            lo que hace que si lo creas de adentro, no podes volver a loguearte al salir.  -- X
+            Del loguin tampóco permite introducir password.  -- X
+   
+    Modificar Usuario *
+        Validacion datos y vacio (MENSAJES "ACA NO") no muestra el botón para modificar cuando salta un error por dejar vacio un campo  -- X
+   
+    Borrar Usuario *
+        Con prestamo creado y eliminado. *
+        Con Préstamo activo (No lo permite por tener prestamos asociados). *
+        Con Préstamo devuelto (No lo permite por tener prestamos asociados). -- X
+
+Libros
+
+    Listar Libros *
+    
+    Crear Libros *
+        Validacion datos y vacio (MENSAJES "ACA NO") no muestra el botón para modificar cuando salta un error por dejar vacio un campo  -- X
+    
+    Modificar Libros *
+        Validacion datos y vacio *
+    
+    Borrar Libros *
+        Con prestamo creado y eliminado. *
+        Con Préstamo activo (No lo permite por tener prestamos asociados).
+        Con Préstamo devuelto (No lo permite por tener prestamos asociados). -- X
+
+
+Préstamos
+
+    Listar Préstamos *
+        Solo estado 1 (prestados) * El estado 2 que son los devueltos no deben aparecer.
+    
+    Crear Préstamo *
+        Solo libros disponibles * Libros que no se encuentren prestados.
+    
+    Modificar Préstamo 
+        Elegimos no poner esta funcion por un tema de diseño, si se hace mal el Préstamo, se elimina y se hace de nuevo.
+        En caso de usar esa función, solo se podria editar la fecha de préstamo porque no queremos que se puedan modificar los ids de libros y personas.
+
+    Devolver Préstamo *
+        Cambia el estado del Préstamo pero lo mantiene en la base para registro (a estado 2), no elimina el objeto Préstamo de la BD.
+
+    Eliminar Préstamo *
+        Solo permite eliminar préstamos sin devolución que es son los mismos que lista (estado 1).
+
